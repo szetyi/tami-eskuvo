@@ -6,6 +6,14 @@ $(document).ready(function() {
 
     $.getJSON(("./gallery/eskuvok/" + gallery_name + "/leiras.json"), function(json){
         // console.log(json);
+        
+        {
+            console.log(json.thumbnail);
+            
+            let img = new Image();
+            img.src = './gallery/eskuvok/' + gallery_name + '/img/' + json.thumbnail + '.jpg';
+            $("#thumbnail").append(img); 
+        }
 
         for (let i = 0; i < json.col_1.length; i++) {
             let img = new Image();
