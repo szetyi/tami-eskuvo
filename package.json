@@ -1,0 +1,16 @@
+{
+  "name": "tami_eskuvo",
+  "version": "1.0.0",
+  "description": "Tamara Eskuvoi grafika & dekor",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index",
+    "dev": "nodemon index"
+  },
+  "author": "Szilágyi Péter",
+  "license": "ISC",
+  "dependencies": {
+    "jquery": "^3.5.1",
+    "nodemon": "^2.0.3"
+  }
+}
