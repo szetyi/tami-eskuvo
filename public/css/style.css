@@ -1,0 +1,849 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&family=Roboto&display=swap');
+
+/*
+SVG COLOR CHANGER
+https://codepen.io/sosuke/pen/Pjoqqp
+*/
+
+/* @font-face {
+    font-family: 'Akrobat';
+    src: url('../font/Akrobat/WEB/Akrobat-Regular.eot'); 
+    src: url('../font/Akrobat/WEB/Akrobat-Regular.eot?#iefix') format('embedded-opentype'), 
+         url('../font/Akrobat/WEB/Akrobat-Regular.woff') format('woff'), 
+         url('../font/Akrobat/TTF/Akrobat-Regular.ttf')  format('truetype'), 
+  } */
+
+/* GENERAL */
+
+:root {
+    --primary-color: #fcdcd4;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Montserrat', 'Roboto', sans-serif;
+    text-transform: uppercase;
+    color: #fff;
+    font-weight: 300;
+    font-size: 0.9rem;
+    letter-spacing: 3px;
+}
+
+img {
+    max-width: 100%;
+}
+
+#container {
+    width: 100vw;
+    overflow: hidden;
+    max-width: 100%;
+}
+
+h1 {
+    margin: 5%;
+    font-size: 1.8rem;
+    text-align: center;
+}
+
+h2 {
+    font-size: 1.5rem;
+    margin: 5%;
+}
+
+p {
+    font-size: 1rem;
+}
+
+/* LANDING PAGE */
+
+header {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#cover1 {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    /* background-image: url(../img/cover1.jpg); */
+    background-position: center;
+    background-size: cover;
+    z-index: -10;
+    opacity: 1;
+}
+
+#cover2 {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    /* background-image: url(../img/cover2.jpg); */
+    background-position: center;
+    background-size: cover;
+    z-index: -11;
+    opacity: 0;
+}
+
+#navbar {
+    align-self: flex-end;
+    margin: 5%;
+    z-index: 10;
+}
+
+#navbar ul {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+}
+
+#navbar ul li {
+    margin: 10px;
+}
+
+#navbar ul li a {
+    text-decoration: none;
+    font-size: 0.8rem;
+    color: #fff;
+}
+
+#title {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#title img {
+    width: 50%;
+}
+
+.btn {
+    padding: 1.5%;
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 10px;
+    font-family: 'Montserrat', 'Roboto', sans-serif;
+    text-transform: uppercase;
+    color: #fff;
+    font-size: 1.2rem;
+    transition: ease 0.2s;
+    /* text-shadow: 0px px 2px rgba(150, 150, 150, 1); */
+}
+
+.btn:hover {
+    box-shadow: 0 0 10px var(--primary-color);;
+    cursor: pointer;
+}
+
+.btn:active {
+    transform: translateY(3px);
+}
+
+.btn:focus {
+    outline: none;
+}
+
+/* SZOLGÁLTALTÁSOK */
+
+#szolgaltatasok {
+    color: #000;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: 10%;
+}
+
+#szolgaltatasok-desc {
+    padding: 10%;
+    background-image: url(../img/virag_rozsaszin-01.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+} 
+
+#szolgaltatasok-cards {
+    margin: 5%;
+    height: 500px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    /* background-image: url(img/virag.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain; */
+}
+
+div.card {
+    width: 45%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 5%;
+}
+
+div.card .btn {
+    margin: 0 auto;
+    width: 30%;
+}
+
+.dekoracio-svg {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 50px;
+    width: 50px;
+    height: 50px;
+    margin: 5% auto;
+    background: url(../img/ikon_dekor-01.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 500px;
+    /* filter: invert(87%) sepia(80%) saturate(4342%) hue-rotate(286deg) brightness(102%) contrast(101%); */
+    border: var(--primary-color) 3px solid;
+    border-radius: 50%;
+}
+
+
+.grafika-svg {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 50px;
+    width: 50px;
+    height: 50px;
+    margin: 5% auto;
+    background: url(../img/ikon_grafika-01.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 500px;
+    /* filter: invert(87%) sepia(80%) saturate(4342%) hue-rotate(286deg) brightness(102%) contrast(101%); */
+    border: var(--primary-color) 3px solid;
+    border-radius: 50%;
+}
+
+
+#dekoracio-gallery {
+    display: none;
+}
+
+#grafika-gallery {
+    display: none;
+}
+
+/* #dekoracio-gallery .gallery-frame {
+    background-image: url("../img/cover/fooldal_01.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+} */
+
+/* #grafika-gallery .gallery-frame {
+    background-image: url("../img/cover/visszajel_05.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+} */
+
+.gallery {
+    display: flex;
+    padding: 5%;
+    border-radius: 5px;
+    background-color: rgba(0,0,0,0.1);
+}
+
+.gallery-frame {
+    position: relative;
+    margin: auto;
+    width: 75%;
+    height: 500px;
+    border: var(--primary-color) 3px solid;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.frame1 {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    
+    /* background-image: url("../img/cover/visszajel_05.jpg"); */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    z-index: 9;
+}
+
+.frame2 {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    
+    /* background-image: url("../img/cover/visszajel_05.jpg"); */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    z-index: 10;
+}
+
+.frame3 {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    
+    /* background-image: url("../img/cover/visszajel_05.jpg"); */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    z-index: 11;
+}
+
+.gallery-frame a {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    z-index: 13;
+}
+
+.gallery-frame p {
+    position: absolute;
+    /* width: 100%;
+    height: 100%; */
+    z-index: 12;
+    color: #fff;
+    font-size: 1.5rem;
+    padding: 5%;
+    background-color: rgba(0,0,0,0.2);
+    align-self: center;
+    bottom: 0;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.gallery-left {
+    /* height: 100px; */
+    align-self: center;
+    margin-left: auto;
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 5px;
+    z-index: 20;
+}
+
+.gallery-left img {
+    height: 50px;
+    width: 50px;
+    filter: invert(100%) sepia(14%) saturate(7384%) hue-rotate(292deg) brightness(104%) contrast(97%);
+}
+
+.gallery-right {
+    align-self: center;
+    margin-right: auto;
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 5px;
+    z-index: 20;
+}
+
+.gallery-right img {
+    height: 50px;
+    width: 50px;
+    filter: invert(100%) sepia(14%) saturate(7384%) hue-rotate(292deg) brightness(104%) contrast(97%);}
+
+/* RÓLUNK */
+
+#rolunk {
+    color: #000;
+    margin: auto;
+    text-align: center;
+    margin: 10%;
+    padding-top: 5%;
+}
+
+#rolunk-content {
+    display: flex;
+    flex-direction: row;
+}
+
+#rolunk-content > div {
+    align-self: center;
+    margin: 5%;
+}
+
+#rolunk-content > div > ul {
+    margin: 10%;
+    list-style: none;
+    justify-self: center;
+    text-align: left;
+}
+
+#rolunk-content > div > ul > li {
+    padding-bottom: 5%;
+    font-size: 0.8rem;
+}
+
+#rolunk-content > img {
+    margin: 5%;
+    width: 35%;
+    height: 100%;
+    border-radius: 5px;
+    /* max-height: 65vh; */
+}
+
+.email-svg {
+    display: inline-block;
+    vertical-align: middle;
+    width: 1.2rem;
+    height: 1.2rem;
+    background: url(../img/email.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-color: #fff;
+    filter: invert();
+    border: #fff 2px solid;
+    border-radius: 50%;
+}
+
+.facebook-svg {
+    display: inline-block;
+    vertical-align: middle;
+    width: 1.2rem;
+    height: 1.2rem;
+    background: url(../img/facebook.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-color: #fff;
+    filter: invert();
+    border: #fff 2px solid;
+    border-radius: 50%;
+}
+
+.instagram-svg {
+    display: inline-block;
+    vertical-align: middle;
+    width: 1.2rem;
+    height: 1.2rem;
+    background: url(../img/instagram.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-color: #fff;
+    filter: invert();
+    border: #fff 2px solid;
+    border-radius: 50%;
+}
+
+/* ARAJANLAT */
+
+#arajanlat {
+    color: #000;
+    margin: auto;
+    text-align: center;
+    margin: 10%;
+    padding-top: 5%;
+}
+
+#arajanlat > ul {
+    margin: 5% 20%;
+    list-style: none;
+    justify-self: center;
+}
+
+#arajanlat > ul > li {
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 3%;
+    /* font-size: 0.9rem; */
+}
+
+/* #arajanlat-1:before {
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    width: 1em;
+    height: 1em;
+    background-image: url(../img/szam_1-01.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 500%;
+} */
+
+#arajanlat-1 {
+    /* display: inline-block; */
+    /* vertical-align: middle; */
+    width: 250px;
+    max-width: 15%;
+    height: 50px;
+    align-self: center;
+    /* height: 2rem; */
+    background-image: url(../img/szam_1-01.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 250px;
+}
+
+#arajanlat-2 {
+    /* display: inline-block; */
+    /* vertical-align: middle; */
+    width: 250px;
+    max-width: 15%;
+    height: 50px;
+    align-self: center;
+    /* height: 2rem; */
+    background-image: url(../img/szam_2-01.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 250px;
+}
+
+#arajanlat-3 {
+    /* display: inline-block; */
+    /* vertical-align: middle; */
+    width: 250px;
+    max-width: 15%;
+    height: 50px;
+    align-self: center;
+    /* height: 2rem; */
+    background-image: url(../img/szam_3-01.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 250px;
+}
+
+/* #arajanlat input[type="button"] {
+    padding: 1.5%;
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 10px;
+    font-family: 'Montserrat', 'Roboto', sans-serif;
+    text-transform: uppercase;
+    color: #fff;
+    font-size: 0.9rem;
+    transition: ease 0.2s;
+}
+
+#arajanlat input[type="button"]:hover {
+    box-shadow: 0 0 10px var(--primary-color);;
+    cursor: pointer;
+}
+
+#arajanlat input[type="button"]:active {
+    transform: translateY(3px);
+}
+
+#arajanlat input[type="button"]:focus {
+    outline: none;
+} */
+
+/* ÁRAJÁNLAT FORM */
+
+#arajanlat-form {
+    color: #000;
+    margin: auto;
+    text-align: center;
+    /* margin: 10%; */
+    display: none;
+}
+
+#form-korasztal, #form-tablaasztal, #form-pinterest-igen, #form-pinterest-nem {
+    margin-left: 1em;
+}
+
+#arajanlat-form > form > h2 {
+    margin-top: 0;
+}
+
+#arajanlat-form > form > fieldset {
+    margin: 5% auto;
+    padding: 2%;
+    text-align: left;
+    width: 50%;
+}
+
+#arajanlat-form input, textarea {
+    padding: 5px;
+    margin: 5px 0;
+}
+
+#arajanlat-form input[type="text"] {
+    width: 100%;
+}
+
+#arajanlat-form input[type="email"] {
+    width: 100%;
+}
+
+#arajanlat-form input[type="address"] {
+    width: 100%;
+}
+
+#arajanlat-form input[type="tel"] {
+    width: 50%;
+}
+
+#arajanlat-form input[type="number"] {
+    width: 10%;
+}
+
+#arajanlat-form input[type="date"] {
+    width: 50%;
+}
+
+#arajanlat-form textarea {
+    resize: none;
+    width: 100%;
+}
+
+#arajanlat-form > form > input.btn {
+    margin-bottom: 5%;
+}
+
+/* #arajanlat-form > form > input[type="submit"] {
+    padding: 1.5%;
+    background-color: var(--primary-color);;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Montserrat', 'Roboto', sans-serif;
+    text-transform: uppercase;
+    color: #fff;
+    font-size: 0.9rem;
+    transition: ease 0.2s;
+}
+
+#arajanlat-form > form > input[type="submit"]:hover {
+    box-shadow: 0 0 10px var(--primary-color);;
+    cursor: pointer;
+}
+
+#arajanlat-form > form > input[type="submit"]:active {
+    transform: translateY(3px);
+}
+
+#arajanlat-form > form > input[type="submit"]:focus {
+    outline: none;
+} */
+
+/* #arajanlat-form > form > fieldset  */
+
+/* VISSZAJELZESEK */
+
+#visszajelzesek {
+    height: 100vh;
+    margin: auto;
+    text-align: center;
+    display: flex;
+}
+
+#vj-text {
+    align-self: center;
+    margin: 15%;
+}
+
+
+#vj-cover1 {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url(../img/cover/visszajel_01.jpg);
+    background-position: center;
+    background-size: cover;
+    z-index: -10;
+    opacity: 1;
+}
+
+#vj-cover2 {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    /* background-image: url(../img/cover2.jpg); */
+    background-position: center;
+    background-size: cover;
+    z-index: -11;
+    opacity: 0;
+}
+
+
+/* MEDIA QUERIES */
+
+/* On screens that are 992px (tablets) */
+@media screen and (max-width: 992px) {
+
+
+    #title img {
+        width: 80%;
+    }
+    
+
+    div.card .btn {
+        width: 50%;
+    }
+
+    #szolgaltatasok > div > h2 {
+        margin: 0 10%;
+    }
+
+    #szolgaltatasok-desc {
+        padding: 5%;
+        padding-bottom: 15%;
+    }
+    
+    #rolunk-content {
+        flex-direction: column;
+    }
+    
+
+    #rolunk-content > div > ul {
+        margin: 10% 15%;
+    }
+
+    #rolunk-content > img {
+        margin: auto;
+        width: 75%;
+        height: 75%;
+    }
+
+    #arajanlat > ul {
+        margin: auto;
+        width: 75%;
+    }
+
+    #arajanlat-form > form > fieldset {
+        width: 75%;
+    }
+
+    #vj-text {
+        margin: 15%;
+    }
+}
+  
+/* On screens that are 600px (phones) */
+@media screen and (max-width: 600px) {
+
+/* GENERAL */
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.2rem;
+    }
+
+/* HEADER */
+
+    #navbar ul{
+        flex-direction: column;
+    }
+
+    #navbar ul li:nth-child(even) {
+        display: none;
+    }
+
+    #title img {
+        width: 100%;
+    }
+    
+/* SZOLGÁLTATÁSOK */
+
+    #szolgaltatasok {
+        margin: 5%;
+    }
+
+    #szolgaltatasok-desc {
+        /* margin: 5%; */
+    }
+
+    #szolgaltatasok-cards {
+        display: block;
+        height: auto;
+    }
+
+    div.card {
+        width: 100%;
+    }
+
+    div.card > p {
+    }
+
+    div.card .btn {
+        margin: 10% auto;
+    }
+        
+    .gallery {
+        padding: 0;
+    }
+
+    .gallery-frame {
+        position: relative;
+        width: 100%;
+    }
+
+    .gallery-left {
+        position: absolute;
+        left: 11%;
+    }
+
+    .gallery-right {
+        position: absolute;
+        right: 11%;
+    }
+
+/* RÓLUNK */
+
+    #rolunk-content > div {
+        margin: 0;
+    }
+
+    #rolunk-content > div > ul {
+        margin: 10% 0;
+    }
+    
+    #rolunk-content > img {
+        width: 100%;
+        /* height: 85%; */
+    }
+
+/* ÁRAJÁNLAT */
+
+    #arajanlat > ul {
+        margin: 5% 0%;
+        width: 100%;
+    }
+    
+    #arajanlat > ul > li {
+        flex-direction: column;
+        /* font-size: 0.9rem; */
+    }
+
+    #arajanlat-form {
+        margin: 5%;
+    }
+    
+    #arajanlat-form > form > fieldset {
+        width: 100%;
+
+    }
+
+/* VISSZAJELZÉSEK */
+
+    #vj-text{
+        margin: 5%;
+    }
+
+    #vj-text > p{
+        margin: 5%;
+    }
+}

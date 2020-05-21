@@ -1,0 +1,35 @@
+1.  
+    optimize changeGalleries()
+    scripts.js
+
+
+2.  
+    vj_images serverside generation and sending
+    bottom_cover.js
+
+
+3.  
+    fo_images serverside generation and sending
+    cover.js
+
+
+4.
+    dekor_gallery serverside generation and sending
+    dekor_gallery.js
+
+
+5.
+    grafika_gallery serverside generation and sending
+    grafika_gallery.js
+
+
+6.
+    scrollwheel fix
+
+
+7. 
+    finish comments
+
+
+8.
+    documentation

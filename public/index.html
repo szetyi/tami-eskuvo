@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tamara Esküvői grafika & dekor</title>
-    <script src="jquery-3.5.1.min.js"></script>
-    <link rel="stylesheet" href="style.css">
+    <script src="scripts/jquery-3.5.1.min.js"></script>
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
     <div id="container">
@@ -54,7 +54,12 @@
                         <h2>Dekoráció</h2>
                     </div>
 
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod libero voluptas sapiente eum aliquid, vel consequatur et vero possimus iure!</p>
+                    <p>A dekoráció fontos része az esküvőtöknek,
+                        mely ünnepivé varázsolja a nagy napotok
+                        helyszínét és tükrözi a személyiségeteket.
+                        Figyelembe véve a választott helyszín
+                        adottságait, segítek nektek megtervezni
+                        és megalkotni az esküvőtök dekorációját.</p>
 
                     <input type="button" class="btn" id="dekoracio-button" value="Galéria">
 
@@ -68,7 +73,12 @@
                         <h2>Grafika</h2>
                     </div>
 
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro, facilis doloribus eveniet eligendi corrupti natus cupiditate quasi cumque neque beatae.</p>
+                    <p>meghívó | boríték | egyedi kézműves boríték
+                        ültetőkártya | ülésrend | menülap
+                        asztalszám | tanú felkérő kártya
+                        pénzátadó boríték | címkék
+                        matricák | instagram fotókeret
+                        köszönőajándék | szülőköszöntő ajándék.</p>
 
                     <input type="button" class="btn" id="grafika-button" value="Galéria">
                     
@@ -85,9 +95,19 @@
                     </div>
 
                     <div class="gallery-frame">
-                        <div class="frame1"></div>
-                        <div class="frame2"></div>
-                        <div class="frame3"></div>
+                        
+                        <a href="/gallery?norbi-dia" target="_blank"></a>
+                        <p>Norbi & Dia <span></span></p>
+
+                        <div class="frame1">
+                        </div>
+
+                        <div class="frame2">
+                        </div>
+
+                        <div class="frame3">
+                        </div>
+
                     </div>
                     
                     <div class="gallery-right">
@@ -190,14 +210,20 @@
                 <fieldset>
                     <legend>Alapadatok</legend>
 
-                    <label for="form-jegyespar-nev">A jegyespár neve</label>
-                        <input type="text" name="jegyespar-nev" id="form-jegyespar-nev">
+                    <label for="form-jegyespar-nev">A jegyespár neve</label><br>
+                        <input type="text" name="jegyespar-nev" id="form-jegyespar-nev"><br>
+                
+                    <label for="form-email">Email cím</label><br>
+                        <input type="email" name="email" id="form-email"><br>
+                        
+                    <label for="form-telefonszam">Telefonszám</label><br>
+                        <input type="tel" name="telefonszam" id="form-telefonszam"><br>
 
                     <label for="form-idopont">Az esküvő időpontja</label><br>
                         <input type="date" name="eskuvo-idopont" id="form-eskuvo-idopont"><br>
 
                     <label for="form-helyszin">Pontos helyszín</label><br>
-                        <input type="text" name="helyszin" id="form-helyszin"><br>
+                        <input type="address" name="helyszin" id="form-helyszin"><br>
 
                     <label for="form-letszam">Tervezett létszám</label><br>
                         <input type="number" name="tervezett-letszam" id="form-tervezett-letszam"><br>
@@ -334,6 +360,11 @@
 
     </div> <!-- container -->
 
-    <script src="script.js"></script>
+    <script src="./scripts/scripts.js"></script>
+    <script src="./scripts/cover.js"></script>
+    <script src="./scripts/reveals.js"></script>
+    <script src="./scripts/dekor_gallery.js"></script>
+    <script src="./scripts/grafika_gallery.js"></script>
+    <script src="./scripts/bottom_cover.js"></script>
 </body>
 </html>
