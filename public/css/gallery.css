@@ -79,7 +79,7 @@ header {
     height: 20vh;
     display: flex;
     flex-direction: column;
-    background-image: url(../img/cover/fooldal_01.jpg);
+    background-image: url(../img/fo_cover/fooldal_01.jpg);
     background-position: center;
     background-size: cover;
 }
@@ -149,7 +149,7 @@ main {
     height: 20vh;
     display: flex;
     flex-direction: column;
-    background-image: url(../img/cover/fooldal_03.jpg);
+    background-image: url(../img/fo_cover/fooldal_03.jpg);
     background-position: center;
     background-size: cover;
 }

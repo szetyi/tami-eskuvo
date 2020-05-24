@@ -6,21 +6,25 @@
 2.  
     vj_images serverside generation and sending
     bottom_cover.js
+    _____________KÉSZ_____________
 
 
 3.  
     fo_images serverside generation and sending
     cover.js
+    _____________KÉSZ_____________
 
 
 4.
     dekor_gallery serverside generation and sending
     dekor_gallery.js
+    _____________KÉSZ_____________
 
 
 5.
     grafika_gallery serverside generation and sending
     grafika_gallery.js
+    _____________KÉSZ_____________
 
 
 6.
