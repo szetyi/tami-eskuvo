@@ -36,6 +36,7 @@ $(document).ready(function() {
     // lefuttatjuk az ellenőrzést.
     window.onresize = function() {changeGalleries();};
 
+
     function changeGalleries() {
 
         // Ha megegyezünk a telefon media-query-vel, akkor a galériákat oszlopszerűen rendezzük el.
@@ -46,12 +47,11 @@ $(document).ready(function() {
 
         // Ha nem telefon, akkor egy helyre rakjuk a galériákat.
         } else {
+
             $("#dekoracio-gallery").detach().insertAfter("#szolgaltatasok-cards");
             $("#grafika-gallery").detach().insertAfter("#szolgaltatasok-cards");
+
         }
     }
-
-
-    
 
 });
