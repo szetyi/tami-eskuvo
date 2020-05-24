@@ -1,7 +1,8 @@
 1.  
-    optimize changeGalleries()
-    scripts.js
-
+    galleries click to zoom
+    gallery.html
+    gallery.js
+    
 
 2.  
     vj_images serverside generation and sending
