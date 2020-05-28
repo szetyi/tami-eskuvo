@@ -1,29 +1,15 @@
 $(document).ready(function() {
 
-    let dekor_gallery = [
-
-        {
-            img : "../gallery/eskuvok/norbi-dia/img/thumbnail.jpg",
-            link : "/gallery?norbi-dia",
-            text : "Norbi & Dia"
-        },
-        {
-            img : "../gallery/eskuvok/kati-pisti/img/01.jpg",
-            link : "/gallery?kati-pisti",
-            text : "Kati & Pisti"
-        }
-
-    ]
-
+    let dekor_gallery = [];
     
     $.get("/get/dekor/", function(data){
-        
+    
         for (let i = 0; i < data.length; i++) {
             let dirname = data[i];
 
-            $.getJSON(("../gallery/" + dirname + "/leiras.json"), function(json){
+            $.getJSON(("../gallery/eskuvok/" + dirname + "/leiras.json"), function(json){
 
-                grafika_gallery.push(
+                dekor_gallery.push(
                     {
                         img : "../gallery/eskuvok/norbi-dia/img/" + json.thumbnail + ".jpg",
                         link : "/gallery?" + dirname,
@@ -33,10 +19,9 @@ $(document).ready(function() {
 
             });
             
-            
         }
-
-        main();
+            
+        
 
     });
 
