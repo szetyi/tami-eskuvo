@@ -4,24 +4,67 @@ $(document).ready(function() {
     
     $.get("/get/dekor/", function(data){
     
+        console.log(data);
+
         for (let i = 0; i < data.length; i++) {
+
             let dirname = data[i];
 
-            $.getJSON(("../gallery/eskuvok/" + dirname + "/leiras.json"), function(json){
-
-                dekor_gallery.push(
+            $.getJSON(("../gallery/eskuvok/" + dirname + "/leiras.json"))
+                .done(function(json){
+                    
+                    console.log(json);
+                        
+                    let gallery_obj = 
                     {
-                        img : "../gallery/eskuvok/norbi-dia/img/" + json.thumbnail + ".jpg",
+                        img : "../gallery/eskuvok/" + dirname + "/img/" + json.thumbnail + ".jpg",
                         link : "/gallery?" + dirname,
                         text : json.title
-                    }
-                );
+                    };
+                    
+                    dekor_gallery[i] = gallery_obj;
+                    console.log("added [" + i + "]");
 
-            });
+                });
+
+            // $.getJSON(("../gallery/eskuvok/" + dirname + "/leiras.json"), function(json){
+
+            //     console.log(json);
+                    
+            //     let gallery_obj = 
+            //     {
+            //         img : "../gallery/eskuvok/" + dirname + "/img/" + json.thumbnail + ".jpg",
+            //         link : "/gallery?" + dirname,
+            //         text : json.title
+            //     };
+
+            //     dekor_gallery[i] = gallery_obj;
+
+            //     if(i == data.length - 1) {
+
+            //         setTimeout(() => {
+            //             main();
+            //         }, 1000);
+
+            //     }
+
+            // });
             
         }
-            
         
+        let wait_for_gallery = setInterval(() => {
+            console.log(dekor_gallery.length)
+            
+            if(dekor_gallery.length == data.length) {
+                clearInterval(wait_for_gallery);
+                main();
+            }
+
+        }, 100);
+
+        // setTimeout(() => {
+        //     main();
+        // }, 1000);
 
     });
 
