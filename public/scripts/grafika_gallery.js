@@ -1,19 +1,14 @@
 $(document).ready(function() {
 
-    // GRAFIKA GALÉRIA TEMP
-    let grafika_gallery = [
-        // "../gallery/grafika/meghivo.jpg",
-        // "../gallery/grafika/arany.jpg",
-        // "../gallery/grafika/meghivo_2.jpg",
-        // "../gallery/grafika/fotofal.jpg",
-        // "../gallery/grafika/meghivo_3.jpg",
-        // "../gallery/grafika/koszono.jpg",
-        // "../gallery/grafika/meghivo_4.jpg",
-        // "../gallery/grafika/udvozlo.jpg"
-    ]
+    // Grafika galéria tömb, ezt egy HTTP Get request tölti fel
+    let grafika_gallery = []
 
+    // HTTP Get request a node.js szervernek a "/get/gr/imgs" címre,
+    // Ez a "../gallery/grafika/" mappában lévő jpg képek fájlneveit adja vissza
+    // A callback funcion akkor fut le, ha már megérkezett a válasz.
     $.get("/get/gr/imgs", function(data){
         
+        // Amennyi kép van, annyiszor fut le a ciklus, belepakolja a képeket a tömbbe.
         for (let i = 0; i < data.length; i++) {
             let filename = data[i];
             
@@ -23,10 +18,12 @@ $(document).ready(function() {
             
         }
 
+        // Amint feltöltöttük a galériát, a main funkció fut le.
         main();
 
     });
 
+    // A teljes funkcionalitás.
     function main(){
             
             // Jelenlegi kép index
@@ -290,16 +287,24 @@ $(document).ready(function() {
 
     }
     
+
+    // Animáció funkció. Egy html elemet és egy irányt kell neki átadni.
     function shakeElement(element, direction) {
 
+        // Ha jobbra akarjuk megrázni
         if(direction == "right") {
 
+            // 15 pixellel jobbra toljuk, amint az végzett, visszahúzzuk,
+            // majd a .css funkcióval levesszük a right : 0 style-t.
+            // Ha ezt nem tesszük meg, új animáció esetén nem megfelelő a működés.
+            // A szám érték (alapesetben 100) az animáció sebessége ms-ben.
             $(element).animate({"right" : '15px'}, 100, function(){
                 $(element).animate({"right" : ""}, 100, function(){
                     $(element).css({"right" : ""});
                 });
             });
 
+        // Bal esetén ugyan az, csak baloldali irányba.
         } else if( direction == "left") {
 
             $(element).animate({"left" : '15px'}, 100, function(){
@@ -308,6 +313,7 @@ $(document).ready(function() {
                 });
             });
 
+        // Ha nem megfelelő az irány (left vagy right) error-t logolunk, az animáció pedig nem fut le.
         } else {
             console.error("direction must be \"left\" or \"right\".");
         }

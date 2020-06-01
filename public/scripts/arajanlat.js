@@ -11,7 +11,6 @@ $(document).ready(function() {
 
     // Attól függően, hogy van e pinterest-tábla (radio button) lenyitjuk a pinterest-link helyét.
     $("#pinterest-link").hide();
-
     $('input:radio[name=pinterest]').change(function () {
 
         if ($("input[name='pinterest']:checked").val() == 'igen') {
@@ -62,75 +61,99 @@ $(document).ready(function() {
 
     })
 
-    // Form submit button kattintáskor nem engedjük az alap funkcióját, illetve itt is vizsgáljuk
+    // Form submit button kattintáskor nem engedjük az alap funkcióját, illetve itt is vizsgáljuk a validitást.
     $("#arajanlat-form > form > input").click(function(e){
         e.preventDefault();
 
+        // Helper function, vizsgálja, hogy a paraméterként kapott érték igaz e.
         const is_value_true = (currentValue) => currentValue === true;
 
+        // HA a "valid" tömb minden eleme igaz értékű, leadhatjuk a form-ot.
         if (valid.every(is_value_true)) {
 
             $("#arajanlat-form > form").submit();
 
+        // HA nem, akkor üzenetet küldünk alert formájában:
         } else {
+            // Az üzenet első sora
             let message = "Kérlek töltsd ki az alábbi mezőket:\n";
             
+            // A "valid" tömb minden elemén végigmegyünk
             $.each(valid, function(index, value) {
 
-                let name = required[index].prop("id");
+                // Ha az érték hamis
+                if(!value) {
 
-                name = $("#arajanlat-form > form > fieldset > label[for='"+ name +"']").text();
-                
-                message += name + "\n";
+                    // Frissítjük a nem valid elem border stílusát pirosra.
+                    required[index].css({ "border" : "2px red solid" });
+
+                    // Kimentjük az adott elem ID-ját
+                    let name = required[index].prop("id");
+                    
+                    // A nevet frissítjük az input elemhez tartozó label szövegével, mert ez már szépen formázott.
+                    name = $("#arajanlat-form > form > fieldset > label[for='"+ name +"']").text();
+
+                    // Hozzáadjuk az üzenethez a nem valid elem nevét.
+                    message += name + "\n";
+
+                } 
                 
             })
 
+            // Az üzenetet egy alert formájában közöljük a felhasználóval.
             alert( message );
         }
         
-    })
+    });
 
+    // Funkció egy paraméterként átadott HTML elem validitásának vizsgálatára.
     function validate(element) {
 
+        // megnézzük, hogy milyen input type-ja van az elemnek
         let type = element.prop("type");
+        // Feltételezzük, hogy nem helyes a kitöltés.
         let isValid = false;
         
+        // Az input type-tól függően máshogy vizsgáljuk a validitást.
         switch (type) {
             case "text":
                         
+                // Ha az input value nem üres, null vagy undefined, akkor elfogadjuk.
                 if(element.val() != "" || null || undefined) isValid = true;
-
                 break;
         
             case "email":
 
+                // Az input value-ra egy reguláris kifejezést vizsgálunk.
                 if((element.val()).match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) isValid = true;
-            
                 break;
         
             case "tel":
                 
+                // lsd. email
                 if((element.val()).match(/^[+]?[\s./0-9]*[(]?[0-9]{1,4}[)]?[-\s./0-9]*$/g)) isValid = true;
-        
                 break;
         
             case "date":
                 
+                // lsd. text
                 if(element.val() != "" || null || undefined) isValid = true;
-    
                 break;
                 
             case "number":
 
+                // lsd. text
+                // mivel a type number, nem kaphat nem-szám értéket.
                 if(element.val() != "" || null || undefined) isValid = true;
-                
                 break;
-        
                                                 
             default:
+                // Ha más az input type, error-t logolunk
+                // mert nincs rá megfelelő vizsgálat.
                 break;
         }
 
+        // Igaz vagy hamis visszatérési érték.
         return isValid;
     }
 

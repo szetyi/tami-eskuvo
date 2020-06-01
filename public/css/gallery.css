@@ -143,6 +143,10 @@ main {
     /* margin: 2%; */
 }
 
+#rows > div > img, #thumbnail > img {
+    cursor: pointer;
+}
+
 #back {
     position: relative;
     width: 100%;

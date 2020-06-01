@@ -6,17 +6,19 @@ $(document).ready(function() {
     // Mindig csak az egyik látszik, míg a másik betölti a következő képet.
     // -----------------------------------
 
+    // Ebbe a tömbbe kerülnek a képek elérési útvonalai
     let fo_images = [];
 
+    // HTTP Get request tölti fel a tömböt.
     $.get("/get/fo/imgs", function(data){
         
+        // Amint megkapjuk a válasz tömböt, ami a .jpg fájlok neveit tartalmazza,
+        // Végigmegyünk rajta, és belerakjuk a képek tömbünkbe, majd meghívjuk a main függvényt.
         for (let i = 0; i < data.length; i++) {
-            let filename = data[i];
             
             fo_images.push(
-                "../img/fo_cover/" + filename,
+                "../img/fo_cover/" + data[i],
             );
-            
         }
 
         main();

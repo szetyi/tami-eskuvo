@@ -6,15 +6,28 @@ $(document).ready(function() {
     // Mindig csak az egyik látszik, míg a másik betölti a következő képet.
     // -----------------------------------
 
+    // Ebbe a tömbbe kerülnek a visszajelzés objektumok, melyek
+    // {
+    //     img: "/elérési/ót/fajl.jpg",
+    //     desc: "leírás"
+    // }
+    // formátumban kell lenniük.
     let vj_images = [];
 
+    // Először lekérjük a visszajelzés szövegeket egy .json fájlból,
+    // ha ez megérkezett, HTTP Get requesttel kérjük a képek elérési útját.
+    // A json fájlban a kép nevével egyező key-hez adjuk hozzá a leírást.
     $.getJSON("../img/vj_cover/visszajel_text.json", function(json){
 
+        // fájlneveket tartalmazó tömböt ad tovább
         $.get("/get/vj/imgs", function(data){
             
+            // Végigmegyünk a válasz tömbön
             for (let i = 0; i < data.length; i++) {
+                // eltároljuk a fájlnevet
                 let filename = data[i];
                 
+                // Az eredeti tömbünkbe belerakjuk az összerakott objektumot
                 vj_images.push(
                     {
                         img : "../img/vj_cover/" + filename,
@@ -24,6 +37,7 @@ $(document).ready(function() {
                 
             }
 
+            // a tömb feltöltése után lefuttatjuk a main függvényt.
             main();
 
         });

@@ -1,20 +1,29 @@
 $(document).ready(function() {
 
+    // Ebbe a tömbbe töltjük be a galéria objektumokat, melyek
+    // {
+    //     img: "/elérési/út/fájl.jpg",
+    //     link: "/gallery?valami-valami",
+    //     text: "leírás"
+    // }
+    // formátumban vannak.
     let dekor_gallery = [];
     
+    // HTTP Get requesttel lekérjük a ../gallery/eskuvok/ mappában
+    // lévő mappák neveit.
     $.get("/get/dekor/", function(data){
-    
-        // console.log(data);
 
+        // A válasz egy mappaneveket tartalmazó tömb
         for (let i = 0; i < data.length; i++) {
 
             let dirname = data[i];
 
+            // Az egyes mappában lévő leiras.json fájlokat lekérjük,
+            // ez tartalmazza az objektumban a thumbnail kép nevét és a leírást.
             $.getJSON(("../gallery/eskuvok/" + dirname + "/leiras.json"))
                 .done(function(json){
-                    
-                    // console.log(json);
                         
+                    // létrehozzuk az objektumot
                     let gallery_obj = 
                     {
                         img : "../gallery/eskuvok/" + dirname + "/img/" + json.thumbnail + ".jpg",
@@ -22,49 +31,26 @@ $(document).ready(function() {
                         text : json.title
                     };
                     
+                    // belerakjuk a tömbünkbe.
                     dekor_gallery[i] = gallery_obj;
-                    // console.log("added [" + i + "]");
 
                 });
-
-            // $.getJSON(("../gallery/eskuvok/" + dirname + "/leiras.json"), function(json){
-
-            //     console.log(json);
-                    
-            //     let gallery_obj = 
-            //     {
-            //         img : "../gallery/eskuvok/" + dirname + "/img/" + json.thumbnail + ".jpg",
-            //         link : "/gallery?" + dirname,
-            //         text : json.title
-            //     };
-
-            //     dekor_gallery[i] = gallery_obj;
-
-            //     if(i == data.length - 1) {
-
-            //         setTimeout(() => {
-            //             main();
-            //         }, 1000);
-
-            //     }
-
-            // });
             
         }
         
+        // Ezzel a számlálóval várjuk a tömb feltöltését, 100 ms-onként
+        // ellenőrzi, hogy minden galériát betöltöttünk e.
         let wait_for_gallery = setInterval(() => {
-            // console.log(dekor_gallery.length)
-            
+        
+            // Akkor van kész a Get request, ha a dekor_gallery
+            // tömb mérete eléri a válaszként kapott tömb méretét.    
             if(dekor_gallery.length == data.length) {
+                // leállítjuk az ellenőrzést, majd futtatjuk a main funkciót.
                 clearInterval(wait_for_gallery);
                 main();
             }
 
         }, 100);
-
-        // setTimeout(() => {
-        //     main();
-        // }, 1000);
 
     });
 
@@ -332,6 +318,7 @@ $(document).ready(function() {
 
     }
 
+    // lsd. grafika_gallery.js
     function shakeElement(element, direction) {
 
         if(direction == "right") {
