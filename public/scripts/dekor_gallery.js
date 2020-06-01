@@ -323,7 +323,7 @@ $(document).ready(function() {
 
         if(direction == "right") {
 
-            $(element).animate({"right" : '15px'}, 100, function(){
+            $(element).animate({"right" : '10px'}, 100, function(){
                 $(element).animate({"right" : ""}, 100, function(){
                     $(element).css({"right" : ""});
                 });
@@ -331,7 +331,7 @@ $(document).ready(function() {
 
         } else if( direction == "left") {
 
-            $(element).animate({"left" : '15px'}, 100, function(){
+            $(element).animate({"left" : '10px'}, 100, function(){
                 $(element).animate({"left" : ""}, 100, function(){
                     $(element).css({"left" : ""});
                 });

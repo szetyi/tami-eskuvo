@@ -298,7 +298,7 @@ $(document).ready(function() {
             // majd a .css funkcióval levesszük a right : 0 style-t.
             // Ha ezt nem tesszük meg, új animáció esetén nem megfelelő a működés.
             // A szám érték (alapesetben 100) az animáció sebessége ms-ben.
-            $(element).animate({"right" : '15px'}, 100, function(){
+            $(element).animate({"right" : '10px'}, 100, function(){
                 $(element).animate({"right" : ""}, 100, function(){
                     $(element).css({"right" : ""});
                 });
@@ -307,7 +307,7 @@ $(document).ready(function() {
         // Bal esetén ugyan az, csak baloldali irányba.
         } else if( direction == "left") {
 
-            $(element).animate({"left" : '15px'}, 100, function(){
+            $(element).animate({"left" : '10px'}, 100, function(){
                 $(element).animate({"left" : ""}, 100, function(){
                     $(element).css({"left" : ""});
                 });

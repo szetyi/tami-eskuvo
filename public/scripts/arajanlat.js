@@ -30,8 +30,7 @@ $(document).ready(function() {
         $("#form-telefonszam"),
         $("#form-eskuvo-idopont"),
         $("#form-helyszin"),
-        $("#form-tervezett-letszam"),
-        $("#form-dekor-szinvilag-stilus")
+        $("#form-tervezett-letszam")
     ]
 
     // Ebben a tömbben tároljuk, hogy az egyes elemeket sikeresen kitöltötte e a felhasználó.
