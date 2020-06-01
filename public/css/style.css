@@ -173,7 +173,7 @@ header {
 
 #szolgaltatasok-cards {
     margin: 5%;
-    height: 500px;
+    height: 600px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -391,6 +391,11 @@ div.card .btn {
 #rolunk-content > div > ul > li {
     padding-bottom: 5%;
     font-size: 0.8rem;
+}
+
+#rolunk-content > div > ul > li > a {
+    text-decoration: none;
+    color: #000;
 }
 
 #rolunk-content > img {

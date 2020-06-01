@@ -154,9 +154,9 @@
                     </p>
 
                     <ul>
-                        <li><span class="email-svg"></span> tamaraeskuvo@gmail.com</li>
-                        <li><span class="facebook-svg"></span> Tamara esküvői grafika & dekor</li>
-                        <li><span class="instagram-svg"></span> Tamaraeskuvo</li>
+                        <li><span class="email-svg"></span> <a href="mailto:tamaraeskuvo@gmail.com">tamaraeskuvo@gmail.com</a> </li>
+                        <li><span class="facebook-svg"></span> <a href="https://www.facebook.com/tamaraeskuvoigrafika" target="_blank" rel="noopener noreferrer">Tamara esküvői grafika & dekor</a></li>
+                        <li><span class="instagram-svg"></span> <a href="https://www.instagram.com/tamara_eskuvo/" target="_blank" rel="noopener noreferrer">tamara_eskuvo</a></li>
                     </ul>
                 </div>
 
@@ -169,12 +169,6 @@
         <div id="arajanlat">
 
             <h1>Árajánlat</h1>
-
-            <!-- <ul>
-                <li id="arajanlat-1"> Ajánlatkerő űrlap alapján felmérem az igényeiteket, majd elkészítem az előzetes kalkulációt.</li>
-                <li id="arajanlat-2"><span></span> Ha ezt elfogadtátok, ezután következik a személyes találkozó és a helyszínbejárás, amely során részletesen megtervezzük és véglelesítjük a dekoráció elemeit.</li>
-                <li id="arajanlat-3"><span></span> Ezt követően megkapjátok a végleges árajánlatot.</li>
-            </ul> -->
 
             <ul>
                 <li> 
@@ -219,16 +213,16 @@
                     <label for="form-telefonszam">Telefonszám</label><br>
                         <input type="tel" name="telefonszam" id="form-telefonszam"><br>
 
-                    <label for="form-idopont">Az esküvő időpontja</label><br>
+                    <label for="form-eskuvo-idopont">Az esküvő időpontja</label><br>
                         <input type="date" name="eskuvo-idopont" id="form-eskuvo-idopont"><br>
 
                     <label for="form-helyszin">Pontos helyszín</label><br>
                         <input type="address" name="helyszin" id="form-helyszin"><br>
 
-                    <label for="form-letszam">Tervezett létszám</label><br>
+                    <label for="form-tervezett-letszam">Tervezett létszám</label><br>
                         <input type="number" name="tervezett-letszam" id="form-tervezett-letszam"><br>
 
-                    <label for="form-szinvilag">A dekoráció színvilágia/stílusa</label><br>
+                    <label for="form-dekor-szinvilag-stilus">A dekoráció színvilága/stílusa</label><br>
                         <input type="text" name="dekor-szinvilag-stilus" id="form-dekor-szinvilag-stilus"><br>
 
                 </fieldset>
@@ -246,7 +240,7 @@
                         
                     <label for="form-foasztal">Hány fős főasztalt terveztek?</label><br>
                         <input type="number" name="foasztal" id="form-foasztal"><br>
-                    <label for="form-vendegasztal">Hány vendégasztalat terveztek?</label><br>
+                    <label for="form-vendegasztal">Hány vendégasztalt terveztek?</label><br>
                         <input type="number" name="vendegasztal" id="form-vendegasztal"><br>
                 </fieldset>
 
@@ -328,11 +322,14 @@
 
                     <label>Van esküvői pinterest táblád?</label><br>
 
-                    <input type="radio" name="pinterest" id="form-pinterest-igen">
+                    <input type="radio" name="pinterest" id="form-pinterest-igen" value="igen">
                     <label for="form-pinterest-igen">Igen</label><br>
-                    <input type="radio" name="pinterest" id="form-pinterest-nem">
+                    <input type="radio" name="pinterest" id="form-pinterest-nem" value="nem">
                     <label for="form-pinterest-nem">Nem</label><br>
-
+                    <div id="pinterest-link">
+                        <label for="form-pinterest-link">A pinterest-táblád linkje</label><br>
+                            <input type="text" name="form-pinterest-link" id="form-pinterest-link"><br>
+                    </div>
                     <label for="form-megjegyzes">Megjegyzések</label><br>
                         <textarea name="megjegyzes" id="form-megjegyzes" cols="30" rows="10"></textarea><br>
                 </fieldset>
@@ -365,6 +362,7 @@
     <script src="./scripts/reveals.js"></script>
     <script src="./scripts/dekor_gallery.js"></script>
     <script src="./scripts/grafika_gallery.js"></script>
+    <script src="./scripts/arajanlat.js"></script>
     <script src="./scripts/bottom_cover.js"></script>
 </body>
 </html>

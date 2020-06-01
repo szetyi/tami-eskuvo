@@ -4,7 +4,7 @@ $(document).ready(function() {
     
     $.get("/get/dekor/", function(data){
     
-        console.log(data);
+        // console.log(data);
 
         for (let i = 0; i < data.length; i++) {
 
@@ -13,7 +13,7 @@ $(document).ready(function() {
             $.getJSON(("../gallery/eskuvok/" + dirname + "/leiras.json"))
                 .done(function(json){
                     
-                    console.log(json);
+                    // console.log(json);
                         
                     let gallery_obj = 
                     {
@@ -23,7 +23,7 @@ $(document).ready(function() {
                     };
                     
                     dekor_gallery[i] = gallery_obj;
-                    console.log("added [" + i + "]");
+                    // console.log("added [" + i + "]");
 
                 });
 
@@ -53,7 +53,7 @@ $(document).ready(function() {
         }
         
         let wait_for_gallery = setInterval(() => {
-            console.log(dekor_gallery.length)
+            // console.log(dekor_gallery.length)
             
             if(dekor_gallery.length == data.length) {
                 clearInterval(wait_for_gallery);
