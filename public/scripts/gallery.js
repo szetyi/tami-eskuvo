@@ -2,7 +2,7 @@ $(document).ready(function() {
 
     // Kezdetben elrejtük a teljes viewportot befedő 
     // kép-kezelítő elemet.
-    $("#zoomed").hide()
+    $("#zoomed").hide();
     $("#zoomed").animate({"opacity" : 0});
 
     // A galléria nevét a window.location.search tartalmazza egy extra 
@@ -72,6 +72,12 @@ $(document).ready(function() {
         });
 
     });
+
+    
+    $("#title img").click(function(){
+        window.location.href='/';
+    });
+
 
 
 });

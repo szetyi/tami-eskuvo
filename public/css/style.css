@@ -124,7 +124,7 @@ header {
 }
 
 #title img {
-    width: 50%;
+    width: 40%;
 }
 
 .btn {
@@ -688,7 +688,7 @@ div.card .btn {
 
 
     #title img {
-        width: 80%;
+        width: 70%;
     }
     
 
@@ -767,9 +767,9 @@ div.card .btn {
         margin: 5%;
     }
 
-    #szolgaltatasok-desc {
-        /* margin: 5%; */
-    }
+    /* #szolgaltatasok-desc {
+        margin: 5%;
+    } */
 
     #szolgaltatasok-cards {
         display: block;
@@ -780,8 +780,8 @@ div.card .btn {
         width: 100%;
     }
 
-    div.card > p {
-    }
+    /* div.card > p {
+    } */
 
     div.card .btn {
         margin: 10% auto;

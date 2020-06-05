@@ -82,6 +82,7 @@ header {
     background-image: url(../img/fo_cover/fooldal_01.jpg);
     background-position: center;
     background-size: cover;
+    /* cursor: pointer; */
 }
 
 
@@ -96,7 +97,11 @@ header {
 }
 
 #title img {
-    transform: scale(2);
+    /* transform: scale(2); */
+    height: 100%;
+    cursor: pointer;
+    z-index: 10;
+
 }
 
 main {
@@ -209,6 +214,10 @@ main {
 
 @media screen and (max-width: 992px) {
     
+    #title img {
+        max-width: 50%;
+    }
+
     main {
         margin: 5%;
     }
