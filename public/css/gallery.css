@@ -212,6 +212,19 @@ main {
     right: 20px;
 }
 
+/* MEDIA QUERIES */
+
+/* On screens that are at least 1920px */
+@media screen and (min-width: 1920px) {
+    main {
+        margin: 5% 20%
+    }
+
+    .btn {
+        padding: 1%;
+    }
+}
+
 @media screen and (max-width: 992px) {
     
     #title img {
@@ -219,14 +232,23 @@ main {
     }
 
     main {
-        margin: 5%;
+        margin: 10% 5%;
+    }
+    
+    .btn {
+        padding: 2%;
     }
 }
 
 @media screen and (max-width: 600px) {
 
+    
+    #title img {
+        max-width: 75%;
+    }
+
     main {
-        margin: 10%;
+        margin: 10% 5%;
     }
 
     #rows {
@@ -242,4 +264,7 @@ main {
         max-height: 95%;
     }
 
+    .btn {
+        padding: 3%;
+    }
 }

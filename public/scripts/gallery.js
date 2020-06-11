@@ -16,7 +16,7 @@ $(document).ready(function() {
         // Betöltjük a fő-képet
         {
             let img = new Image();
-            img.src = '../gallery/eskuvok/' + gallery_name + '/img/' + json.thumbnail + '.jpg';
+            img.src = '../gallery/eskuvok/' + gallery_name + '/img/' + json.main_img + '.jpg';
             $("#thumbnail").append(img); 
         }
 

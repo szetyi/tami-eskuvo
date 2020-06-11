@@ -263,8 +263,10 @@ div.card .btn {
 .gallery-frame {
     position: relative;
     margin: auto;
-    width: 75%;
-    height: 500px;
+    width: 50vw;
+    height: 75vw;
+    max-width: 400px;
+    max-height: 600px;
     border: var(--primary-color) 3px solid;
     border-radius: 5px;
     display: flex;
@@ -318,10 +320,8 @@ div.card .btn {
     z-index: 13;
 }
 
-.gallery-frame p {
+/* .gallery-frame p {
     position: absolute;
-    /* width: 100%;
-    height: 100%; */
     z-index: 12;
     color: #fff;
     font-size: 1.5rem;
@@ -331,7 +331,7 @@ div.card .btn {
     bottom: 0;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
-}
+} */
 
 .gallery-left {
     /* height: 100px; */
@@ -683,7 +683,21 @@ div.card .btn {
 
 /* MEDIA QUERIES */
 
-/* On screens that are 992px (tablets) */
+/* On screens that are at least 1920px */
+@media screen and (min-width: 1920px) {
+
+    #szolgaltatasok, #rolunk, #arajanlat, #arajanlat-form {
+        margin: 5% 20%;
+    }
+
+    div.card {
+        height: 500px;
+    }
+
+
+}
+
+/* On screens that are betweem 600 and 992px (tablets) */
 @media screen and (max-width: 992px) {
 
 
@@ -705,6 +719,11 @@ div.card .btn {
         padding-bottom: 15%;
     }
     
+    .gallery-frame {
+        width: 70vw;
+        height: 105vw;
+    }
+
     #rolunk-content {
         flex-direction: column;
     }
@@ -734,7 +753,7 @@ div.card .btn {
     }
 }
   
-/* On screens that are 600px (phones) */
+/* On screens that are at maximum 600px (phones) */
 @media screen and (max-width: 600px) {
 
 /* GENERAL */
@@ -793,7 +812,8 @@ div.card .btn {
 
     .gallery-frame {
         position: relative;
-        width: 100%;
+        width: 80vw;
+        height: 120vw;
     }
 
     .gallery-left {

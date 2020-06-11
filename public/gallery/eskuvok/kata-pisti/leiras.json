@@ -1,0 +1,15 @@
+{
+    "title" : "Kata & Pisti",
+    "description" : "Helyszín: Kamilla Vendégház, Túrkeve | Dekoráció és grafika: TAMARA Esküvői dekor & grafika",
+    "thumbnail" : "galeria_nyitokep_02",
+    "main_img" : "01",
+    "col_1": [
+        "00","02","03","11"
+    ],
+    "col_2": [
+        "05","06","08","07"
+    ],
+    "col_3": [
+        "09","10","04","12"
+    ]
+}
