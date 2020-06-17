@@ -30,7 +30,8 @@ $(document).ready(function() {
         $("#form-telefonszam"),
         $("#form-eskuvo-idopont"),
         $("#form-helyszin"),
-        $("#form-tervezett-letszam")
+        $("#form-tervezett-letszam"),
+        $("#form-gdpr")
     ]
 
     // Ebben a tömbben tároljuk, hogy az egyes elemeket sikeresen kitöltötte e a felhasználó.
@@ -47,13 +48,23 @@ $(document).ready(function() {
 
             // Az if statement-ben vizsgáljuk, hogy az adott elem valid-e.
             if (validate(element)) {
-                // Ha igen, nem kap keretet, és a 'valid' tömbben a megfelelő element igaz-ra állítjuk.
+                // Ha igen, nem kap keretet
                 element.css({ "border" : "" });
+                
+                // Az elemhez tartozó label-ről levesszük az aláhúzást
+                $("#arajanlat-form > form > fieldset > label[for='"+ element.prop("id") +"']").css({ "text-decoration" : "" });
+
+                // A 'valid' tömbben a megfelelő element igaz-ra állítjuk.
                 valid[index] = true;
 
             } else {
-                // Ha nem valid, akkor kap egy piros keretet, és hamisra állítjuk a 'valid' tömbben a hozzá tartozó elemet.
+                // Ha nem valid, akkor kap egy piros keretet
                 element.css({ "border" : "2px red solid" });
+            
+                // Az elemhez tartozó label-t aláhúzzuk pirossal.
+                $("#arajanlat-form > form > fieldset > label[for='"+ element.prop("id") +"']").css({ "text-decoration" : "underline red" });
+
+                // hamisra állítjuk a 'valid' tömbben a hozzá tartozó elemet.
                 valid[index] = false;
             }
         })
@@ -88,9 +99,13 @@ $(document).ready(function() {
 
                     // Kimentjük az adott elem ID-ját
                     let name = required[index].prop("id");
-                    
+
+                    // Az elemhez tartozó label-t aláhúzzuk pirossal.
+                    $("#arajanlat-form > form > fieldset > label[for='"+ name +"']").css({ "text-decoration" : "underline red" });
+
                     // A nevet frissítjük az input elemhez tartozó label szövegével, mert ez már szépen formázott.
                     name = $("#arajanlat-form > form > fieldset > label[for='"+ name +"']").text();
+
 
                     // Hozzáadjuk az üzenethez a nem valid elem nevét.
                     message += name + "\n";
@@ -145,7 +160,12 @@ $(document).ready(function() {
                 // mivel a type number, nem kaphat nem-szám értéket.
                 if(element.val() != "" || null || undefined) isValid = true;
                 break;
-                                                
+                       
+            case "checkbox":
+
+                if(element.prop("checked") == true) isValid = true;
+                break;
+
             default:
                 // Ha más az input type, error-t logolunk
                 // mert nincs rá megfelelő vizsgálat.

@@ -2,6 +2,7 @@
     "title" : "Norbi & Dia",
     "description" : "Norbi és Dia valami valami Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus quia labore soluta ad unde non quae sunt dolores aspernatur facilis, laboriosam ipsam id nam provident consectetur qui at atque harum. Aliquid accusantium perspiciatis vitae earum nihil deleniti corrupti reiciendis! Officia?",
     "thumbnail" : "thumbnail",
+    "main_img" : "thumbnail",
     "col_1": [
         0,1,2
     ],

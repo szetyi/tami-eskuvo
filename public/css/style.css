@@ -34,6 +34,10 @@ body {
     letter-spacing: 3px;
 }
 
+.btn, fieldset, #tami-kep, .gallery-frame, .gallery-left, .gallery-right{
+    box-shadow: 0px 0px 10px rgba(150, 150, 150, 0.3);
+}
+
 img {
     max-width: 100%;
 }
@@ -73,7 +77,6 @@ header {
     position: absolute;
     width: 100%;
     height: 100%;
-    /* background-image: url(../img/cover1.jpg); */
     background-position: center;
     background-size: cover;
     z-index: -10;
@@ -84,7 +87,6 @@ header {
     position: absolute;
     width: 100%;
     height: 100%;
-    /* background-image: url(../img/cover2.jpg); */
     background-position: center;
     background-size: cover;
     z-index: -11;
@@ -137,7 +139,6 @@ header {
     color: #fff;
     font-size: 1.2rem;
     transition: ease 0.2s;
-    /* text-shadow: 0px px 2px rgba(150, 150, 150, 1); */
 }
 
 .btn:hover {
@@ -177,10 +178,6 @@ header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    /* background-image: url(img/virag.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain; */
 }
 
 div.card {
@@ -208,7 +205,6 @@ div.card .btn {
     background-repeat: no-repeat;
     background-position: center;
     background-size: 500px;
-    /* filter: invert(87%) sepia(80%) saturate(4342%) hue-rotate(286deg) brightness(102%) contrast(101%); */
     border: var(--primary-color) 3px solid;
     border-radius: 50%;
 }
@@ -225,7 +221,6 @@ div.card .btn {
     background-repeat: no-repeat;
     background-position: center;
     background-size: 500px;
-    /* filter: invert(87%) sepia(80%) saturate(4342%) hue-rotate(286deg) brightness(102%) contrast(101%); */
     border: var(--primary-color) 3px solid;
     border-radius: 50%;
 }
@@ -239,30 +234,17 @@ div.card .btn {
     display: none;
 }
 
-/* #dekoracio-gallery .gallery-frame {
-    background-image: url("../img/cover/fooldal_01.jpg");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-} */
-
-/* #grafika-gallery .gallery-frame {
-    background-image: url("../img/cover/visszajel_05.jpg");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-} */
-
 .gallery {
     display: flex;
-    padding: 5%;
+    /* padding: 5%; */
+    /* justify-content: space-around; */
     border-radius: 5px;
-    /* background-color: rgba(0,0,0,0.1); */
 }
 
 .gallery-frame {
     position: relative;
-    margin: auto;
+    /* margin: auto; */
+    margin: 5px;
     width: 50vw;
     height: 75vw;
     max-width: 400px;
@@ -278,8 +260,6 @@ div.card .btn {
     width: 100%;
     height: 100%;
     opacity: 0;
-    
-    /* background-image: url("../img/cover/visszajel_05.jpg"); */
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -291,8 +271,6 @@ div.card .btn {
     width: 100%;
     height: 100%;
     opacity: 1;
-    
-    /* background-image: url("../img/cover/visszajel_05.jpg"); */
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -304,8 +282,6 @@ div.card .btn {
     width: 100%;
     height: 100%;
     opacity: 0;
-    
-    /* background-image: url("../img/cover/visszajel_05.jpg"); */
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -334,10 +310,8 @@ div.card .btn {
 } */
 
 .gallery-left {
-    /* height: 100px; */
     align-self: center;
     margin-left: auto;
-    /* background-color: rgba(0,0,0,0.2); */
     border-radius: 5px;
     z-index: 20;
 }
@@ -351,7 +325,6 @@ div.card .btn {
 .gallery-right {
     align-self: center;
     margin-right: auto;
-    /* background-color: rgba(0,0,0,0.2); */
     border-radius: 5px;
     z-index: 20;
 }
@@ -403,7 +376,6 @@ div.card .btn {
     width: 35%;
     height: 100%;
     border-radius: 5px;
-    /* max-height: 65vh; */
 }
 
 .email-svg {
@@ -471,29 +443,13 @@ div.card .btn {
     display: flex;
     flex-direction: row;
     padding-bottom: 3%;
-    /* font-size: 0.9rem; */
 }
 
-/* #arajanlat-1:before {
-    content: '';
-    display: inline-block;
-    vertical-align: middle;
-    width: 1em;
-    height: 1em;
-    background-image: url(../img/szam_1-01.svg);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 500%;
-} */
-
 #arajanlat-1 {
-    /* display: inline-block; */
-    /* vertical-align: middle; */
     width: 250px;
     max-width: 15%;
     height: 50px;
     align-self: center;
-    /* height: 2rem; */
     background-image: url(../img/szam_1-01.svg);
     background-repeat: no-repeat;
     background-position: center;
@@ -501,13 +457,10 @@ div.card .btn {
 }
 
 #arajanlat-2 {
-    /* display: inline-block; */
-    /* vertical-align: middle; */
     width: 250px;
     max-width: 15%;
     height: 50px;
     align-self: center;
-    /* height: 2rem; */
     background-image: url(../img/szam_2-01.svg);
     background-repeat: no-repeat;
     background-position: center;
@@ -515,43 +468,15 @@ div.card .btn {
 }
 
 #arajanlat-3 {
-    /* display: inline-block; */
-    /* vertical-align: middle; */
     width: 250px;
     max-width: 15%;
     height: 50px;
     align-self: center;
-    /* height: 2rem; */
     background-image: url(../img/szam_3-01.svg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: 250px;
 }
-
-/* #arajanlat input[type="button"] {
-    padding: 1.5%;
-    background-color: var(--primary-color);
-    border: none;
-    border-radius: 10px;
-    font-family: 'Montserrat', 'Roboto', sans-serif;
-    text-transform: uppercase;
-    color: #fff;
-    font-size: 0.9rem;
-    transition: ease 0.2s;
-}
-
-#arajanlat input[type="button"]:hover {
-    box-shadow: 0 0 10px var(--primary-color);;
-    cursor: pointer;
-}
-
-#arajanlat input[type="button"]:active {
-    transform: translateY(3px);
-}
-
-#arajanlat input[type="button"]:focus {
-    outline: none;
-} */
 
 /* ÁRAJÁNLAT FORM */
 
@@ -559,7 +484,6 @@ div.card .btn {
     color: #000;
     margin: auto;
     text-align: center;
-    /* margin: 10%; */
     display: none;
 }
 
@@ -578,7 +502,7 @@ div.card .btn {
     width: 50%;
 }
 
-#arajanlat-form input, textarea {
+#arajanlat-form input:not(.btn), textarea {
     padding: 5px;
     margin: 5px 0;
 }
@@ -616,32 +540,9 @@ div.card .btn {
     margin-bottom: 5%;
 }
 
-/* #arajanlat-form > form > input[type="submit"] {
-    padding: 1.5%;
-    background-color: var(--primary-color);;
-    border: none;
-    border-radius: 10px;
-    font-family: 'Montserrat', 'Roboto', sans-serif;
-    text-transform: uppercase;
-    color: #fff;
-    font-size: 0.9rem;
-    transition: ease 0.2s;
-}
-
-#arajanlat-form > form > input[type="submit"]:hover {
-    box-shadow: 0 0 10px var(--primary-color);;
-    cursor: pointer;
-}
-
-#arajanlat-form > form > input[type="submit"]:active {
-    transform: translateY(3px);
-}
-
-#arajanlat-form > form > input[type="submit"]:focus {
-    outline: none;
+/* #arajanlat-form > form > fieldset > label[for="form-gdpr"] {
+    text-decoration: underline red;
 } */
-
-/* #arajanlat-form > form > fieldset  */
 
 /* VISSZAJELZESEK */
 
@@ -673,7 +574,6 @@ div.card .btn {
     position: absolute;
     width: 100%;
     height: 100%;
-    /* background-image: url(../img/cover2.jpg); */
     background-position: center;
     background-size: cover;
     z-index: -11;
@@ -685,14 +585,35 @@ div.card .btn {
 
 /* On screens that are at least 1920px */
 @media screen and (min-width: 1920px) {
+        
+    #navbar {
+        margin: 2.5%;
+    }
 
     #szolgaltatasok, #rolunk, #arajanlat, #arajanlat-form {
         margin: 5% 20%;
     }
 
+    #szolgaltatasok-cards {
+        margin-top: 0;
+    }
+
+    .gallery {
+        padding: 0;
+    }
+
+    #rolunk, #arajanlat {
+        padding-top: 0;
+    }
+
+    #arajanlat {
+        margin-bottom: 10%;
+    }
+
     div.card {
         height: 500px;
     }
+
 
 
 }
@@ -786,10 +707,6 @@ div.card .btn {
         margin: 5%;
     }
 
-    /* #szolgaltatasok-desc {
-        margin: 5%;
-    } */
-
     #szolgaltatasok-cards {
         display: block;
         height: auto;
@@ -798,9 +715,6 @@ div.card .btn {
     div.card {
         width: 100%;
     }
-
-    /* div.card > p {
-    } */
 
     div.card .btn {
         margin: 10% auto;
@@ -838,7 +752,6 @@ div.card .btn {
     
     #rolunk-content > img {
         width: 100%;
-        /* height: 85%; */
     }
 
 /* ÁRAJÁNLAT */
@@ -850,7 +763,6 @@ div.card .btn {
     
     #arajanlat > ul > li {
         flex-direction: column;
-        /* font-size: 0.9rem; */
     }
 
     #arajanlat-form {

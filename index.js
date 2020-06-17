@@ -5,7 +5,7 @@ const $ = require('jquery');
 
 const server = http.createServer((req, res) => {
     
-    // Build filepath
+    // Build filepath    
 
     let filePath = path.join(
         __dirname, 'public',

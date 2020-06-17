@@ -55,6 +55,33 @@ $(document).ready(function() {
     });
 
     function main(){    
+
+        dekor_gallery.forEach(e => {
+            console.log(e.text);
+        });
+        // console.log(dekor_gallery);     
+        
+           
+
+        let frame0 = {
+            prev : undefined,
+            curr : undefined,
+            next : undefined
+        }
+    
+        let frame1 = {
+            prev : undefined,
+            curr : undefined,
+            next : undefined
+        }
+
+        // Ez a szám adja meg, hogy mennyi a minimum galéria szám, amitől kezdve már kettős galériát
+        // szeretnénk használni. 
+        let dualGalleryMinimum = 5;
+
+        // Ebben a változóban tároljuk, hogy éppen kettős gallérián vagyunk e, vagy sem.
+        let isDualEnabled = false;
+        
         // Jelenlegi kép index
         let current_dekor_gallery = 0;
 
@@ -62,152 +89,428 @@ $(document).ready(function() {
         let current_dekor_frame = 2;
 
         // Galéria inicializálása
-        updateDekorGallery(current_dekor_gallery, 'init');
+        checkDualDekorGallery(dualGalleryMinimum);
+        updateDekorGallery('init');
 
 
-        function updateDekorGallery(current, direction) {
-            
-            $("#dekoracio-gallery .gallery .gallery-frame p").text(dekor_gallery[current].text);
-            $("#dekoracio-gallery .gallery .gallery-frame a").attr({'href' : dekor_gallery[current].link});
+        // Amikor átméretezzük az ablakot, legyen az asztali, vagy tablet/telefon elforgatás,
+        // lefuttatjuk az ellenőrzést.
+        window.addEventListener('resize', function(){
+            checkDualDekorGallery(dualGalleryMinimum);
+        });
 
-            // Inicializáláshoz
-            if(direction == 'init') {
+        function checkDualDekorGallery(treshold) {
 
-                // Ez mindig a 0. képet állítja az első láthatónak, és a tőle jobbra lépéshez beállítja az 1. képet.
-                $("#dekoracio-gallery .gallery .gallery-frame .frame2").css({"background-image" : ("url(" + dekor_gallery[current].img +")")});
-                $("#dekoracio-gallery .gallery .gallery-frame .frame3").css({"background-image" : ("url(" + dekor_gallery[current+1].img +")")});
+            // Ha elég széles a képernyő, azaz tabletnél nagyobb képernyő vagyunk,
+            // akkor lehet két galléria kép egymás mellett. 
+            // Azt is vizsgálni kell, hogy mennyi megjelenítendő kép van a galériában,
+            // ha kevesebb, mint a megadott érték, akkor felesleges egyszerre többet mutatni.
+    
+            if (window.matchMedia('(max-width: 992px)').matches) {
+    
+                // Kicsi képernyő, nem kell a kettőzés.
+                // console.log("Screen small, set gallery to single");
+                isDualEnabled = false;
+                $($("#dekoracio-gallery .gallery .gallery-frame")[1]).hide();
 
-            // Balra lépés
-            } else if(direction == 'left') {
-
-                // Attól függően, hogy a három frame közül melyik látható, mást csinálunk.
-                switch (current_dekor_frame) {
-
-                    case 1:
-
-                        // Az első látható, úgyhogy a balra lépésnél a harmadik jön, felfedjük, az elsőt elrejtjük.
-                        $("#dekoracio-gallery .gallery .gallery-frame .frame1").animate({opacity : 0}, 333);
-                        $("#dekoracio-gallery .gallery .gallery-frame .frame3").animate({opacity : 1}, 333);
-
-                        // Az új látható a hármas.
-                        current_dekor_frame = 3;
-
-                        // Mivel a hármas látható, a tőle balra lévő a kettes lesz, ez megkapja előre a megfelelő képet.
-                        // A tőle jobbra lévő az egyes kép lesz, ez is előre tölti a képét.
-                        if(current != 0){    
-                            $("#dekoracio-gallery .gallery .gallery-frame .frame2").css({"background-image" : ("url(" + dekor_gallery[current-1].img +")")});
-                        }
-                        $("#dekoracio-gallery .gallery .gallery-frame .frame1").css({"background-image" : ("url(" + dekor_gallery[current+1].img +")")});
-                        
-                        break;
-                        
-                    case 2:
-
-                        // Másodikat elrejtjük, balra az első van, felfedjük.
-                        $("#dekoracio-gallery .gallery .gallery-frame .frame2").animate({opacity : 0}, 333);
-                        $("#dekoracio-gallery .gallery .gallery-frame .frame1").animate({opacity : 1}, 333);
-
-                        // Az első az új látható.
-                        current_dekor_frame = 1;
-                        
-                        // Előre töltjük a két új, jelenleg nem látható szombszédot.
-                        if(current != 0){
-                            $("#dekoracio-gallery .gallery .gallery-frame .frame3").css({"background-image" : ("url(" + dekor_gallery[current-1].img +")")});
-                        }    
-                        $("#dekoracio-gallery .gallery .gallery-frame .frame2").css({"background-image" : ("url(" + dekor_gallery[current+1].img +")")});
-                        
-                        
-                        break;
-                        
-                    case 3:
-                        
-                        // Harmadikat elrejtjük, balra az második van, felfedjük.
-                        $("#dekoracio-gallery .gallery .gallery-frame .frame3").animate({opacity : 0}, 333);
-                        $("#dekoracio-gallery .gallery .gallery-frame .frame2").animate({opacity : 1}, 333);
-
-                        // A második az új látható.
-                        current_dekor_frame = 2;
-
-                        // Előre töltjük a két új, jelenleg nem látható szombszédot.
-                        if(current != 0){
-                            $("#dekoracio-gallery .gallery .gallery-frame .frame1").css({"background-image" : ("url(" + dekor_gallery[current-1].img +")")});
-                        }    
-                        $("#dekoracio-gallery .gallery .gallery-frame .frame3").css({"background-image" : ("url(" + dekor_gallery[current+1].img +")")});
-                        
-                        break;
                 
-                    default:
-
-                        // Ide nem szabadna eljutni, error
-                        console.error("Current frame out of range [1-3] ?!");
-                        break;
-
-                }
-
-            // Jobbra léptetés
-            // lsd. balra
-            } else if (direction == 'right') {
-
-                switch (current_dekor_frame) {
-
-                    case 1:
-
-                        $("#dekoracio-gallery .gallery .gallery-frame .frame1").animate({opacity : 0}, 333);
-                        $("#dekoracio-gallery .gallery .gallery-frame .frame2").animate({opacity : 1}, 333);
-
-                        current_dekor_frame = 2;
-
-                        $("#dekoracio-gallery .gallery .gallery-frame .frame1").css({"background-image" : ("url(" + dekor_gallery[current-1].img +")")});
-                        if(current != dekor_gallery.length - 1){    
-                            $("#dekoracio-gallery .gallery .gallery-frame .frame3").css({"background-image" : ("url(" + dekor_gallery[current+1].img +")")});
-                        }    
-                        break;
-                        
-                    case 2:
-
-                        $("#dekoracio-gallery .gallery .gallery-frame .frame2").animate({opacity : 0}, 333);
-                        $("#dekoracio-gallery .gallery .gallery-frame .frame3").animate({opacity : 1}, 333);
-                        
-                        current_dekor_frame = 3;
-
-                        $("#dekoracio-gallery .gallery .gallery-frame .frame2").css({"background-image" : ("url(" + dekor_gallery[current-1].img +")")});
-                        if(current != dekor_gallery.length - 1){    
-                            $("#dekoracio-gallery .gallery .gallery-frame .frame1").css({"background-image" : ("url(" + dekor_gallery[current+1].img +")")});
-                        }
-                        
-                        break;
-                        
-                    case 3:
-
-                        $("#dekoracio-gallery .gallery .gallery-frame .frame3").animate({opacity : 0}, 333);
-                        $("#dekoracio-gallery .gallery .gallery-frame .frame1").animate({opacity : 1}, 333);
-
-                        current_dekor_frame = 1;
-
-                        $("#dekoracio-gallery .gallery .gallery-frame .frame3").css({"background-image" : ("url(" + dekor_gallery[current-1].img +")")});
-                        if(current != dekor_gallery.length - 1){
-                            $("#dekoracio-gallery .gallery .gallery-frame .frame2").css({"background-image" : ("url(" + dekor_gallery[current+1].img +")")});
-                        }    
-                        
-                        break;
-                
-                    default:
-
-                        console.error("Current frame out of range [1-3] ?!");
-                        break;
-
-                }
-
-
             } else {
+    
+                // Nagy képernyő, nézzük meg, hogy elértük e a minimumot
+                
+                if( dekor_gallery.length < treshold ) {
+                    
+                    // Ha alatta vagyunk akkor nem kell kettőzni.
+                    // console.log("Gallery not large enough, set gallery to single");
+                    isDualEnabled = false;
+                    $($("#dekoracio-gallery .gallery .gallery-frame")[1]).hide();
+    
+                } else {
+    
+                    // Ha felette vagyunk, akkor kell!
+                    // console.log("Set gallery to dual");
+                    isDualEnabled = true;
+                    $($("#dekoracio-gallery .gallery .gallery-frame")[1]).show();
 
-                // Ha a direction nem "init", "left" vagy "right", akkor error
-                console.error("Wrong direction provided at updateDekorGallery: " + direction);
+                }
+    
+            }
+            
+    
+        }
 
+        function updateDekorGallery(setting) {
+
+            switch (setting) {
+
+                // INICIALIZÁLÁS
+                case "init":
+                    
+                    // Ha kettős galérián inicializálunk, akkor beállítjuk a két linket,
+                    // Az első két képet, és az utánuk jövő két képet.
+                    if (isDualEnabled) {
+                        
+                        setHref(0,0);
+                        setHref(1,1);
+
+                        setFrame0("curr", 0);
+                        setFrameBackground(0,getSubFrame("curr"), frame0.curr);
+
+                        setFrame0("next", 2);
+                        setFrameBackground(0,getSubFrame("next"), frame0.next);
+
+                        setFrame1("curr", 1);
+                        setFrameBackground(1,getSubFrame("curr"), frame1.curr);
+
+                        setFrame1("next", 3)
+                        setFrameBackground(1,getSubFrame("next"), frame1.next);
+
+                    // Ha egyes galérián inicializálunk, akkor csak az első framere kell megcsinálni.
+                    } else {
+                        
+                        setHref(0,0);
+                        setFrame0("curr", 0);
+                        setFrameBackground(0,getSubFrame("curr"), frame0.curr);
+                        setFrame0("next", 1);
+                        setFrameBackground(0,getSubFrame("next"), frame0.next);
+
+                    }
+
+                    break;
+            
+                // VÁLTÁS
+                case "change":
+
+                    // Ha kettősről váltunk egyesre:
+                    if(isDualEnabled) {
+/*
+                        // Ha az első képen vagyunk, nincs prev, de van next.
+                        if(frame0.curr == 0) {
+
+                            setFrame0("prev", undefined)
+                            setFrame0("next", frame0.curr + 1);
+                            setFrameBackground(0, getSubFrame("next"), frame0.next);
+
+                        // Ha nem az elsőn állunk, van prev.
+                        } else {
+
+                            setFrame0("prev",frame0.curr - 1);
+                            setFrameBackground(0,getSubFrame("prev"),frame0.prev);
+
+                            // DE! nem biztos, hogy van next!
+                            if(frame0.curr == dekor_gallery.length-1) {
+
+                                setFrame0("next", undefined);
+
+                            } else {
+
+                                setFrame0("next", frame0.curr + 1);
+                                setFrameBackground(0,getSubFrame("next"),frame0.next);
+
+                            }
+
+                        }
+*/
+
+                        setFrame0("next", frame0.curr + 1);
+                        setFrameBackground(0, getSubFrame("next"), frame0.next);
+                        setFrame0("prev", frame0.curr - 1);
+                        setFrameBackground(0, getSubFrame("prev"), frame0.prev);
+
+
+                    // Ha egyesről váltunk kettősre:
+                    } else {
+
+                        // Attól függően, hogy páros, vagy páratlan a current, mást csinálunk!
+
+                        // Páros
+                        if (frame0.curr % 2 == 0) {
+                            
+                            setFrame1("curr", frame0.next)
+                            setFrameBackground(1, getSubFrame("curr"), frame1.curr);
+
+                            setFrame1("prev", frame1.curr - 2);
+                            setFrameBackground(1, getSubFrame("prev"), frame1.prev);
+
+                            setFrame1("next", frame1.curr + 2);
+                            setFrameBackground(1, getSubFrame("next"), frame1.next);
+
+                            setFrame0("prev", frame0.curr - 2);
+                            setFrameBackground(0, getSubFrame("prev"), frame0.prev);
+
+                            setFrame0("next", frame0.curr + 2);
+                            setFrameBackground(0, getSubFrame("next"), frame0.next);
+
+                        // Páratlan
+                        } else {
+                            
+                            setFrame1("curr", frame0.curr);
+                            setFrameBackground(1, getSubFrame("curr"). frame1.curr);
+
+                            setFrame1("prev", frame1.curr - 2);
+                            setFrameBackground(1, getSubFrame("prev"), frame1.prev);
+
+                            setFrame1("next", frame1.curr + 2);
+                            setFrameBackground(1, getSubFrame("next"), frame1.next);
+
+                            setFrame0("curr", frame0.prev);
+                            setFrameBackground(0, getSubFrame("curr"). frame0.curr);
+
+                            setFrame0("prev", frame0.curr - 2);
+                            setFrameBackground(0, getSubFrame("prev"), frame0.prev);
+
+                            setFrame0("next", frame0.curr + 2);
+                            setFrameBackground(0, getSubFrame("next"), frame0.next);
+
+                        }
+
+                    }
+                    
+                    break;
+                    
+                // JOBBRA
+                case "right":
+
+                    if (isDualEnabled) {
+
+                        animateFrame(0, getSubFrame("curr"), 0);
+                        animateFrame(0, getSubFrame("next"), 1);
+                        
+                        animateFrame(1, getSubFrame("curr"), 0);
+                        animateFrame(1, getSubFrame("next"), 1);
+                        
+                        setTimeout(() => {
+                            
+                            current_dekor_gallery += 2;
+                            
+                            setFrameBackground(0, getSubFrame("curr"), frame0.curr);
+                            setFrame0("curr", frame0.curr + 2);
+
+                            setFrameBackground(0, getSubFrame("prev"), frame0.prev);
+                            setFrame0("prev", frame0.curr - 2);
+
+                            setFrameBackground(0, getSubFrame("next"), frame0.next);
+                            setFrame0("next", frame0.curr + 2);
+
+                            setFrameBackground(1, getSubFrame("curr"), frame0.curr);
+                            setFrame1("curr", frame1.curr + 2);
+
+                            setFrameBackground(1, getSubFrame("prev"), frame1.prev);
+                            setFrame1("prev", frame1.curr - 2);
+
+                            setFrameBackground(1, getSubFrame("next"), frame1.next);
+                            setFrame1("next", frame1.curr + 2);
+
+                            current_dekor_frame = getSubFrame("next");
+
+                                
+                        }, 333);
+
+
+
+
+                    } else {
+                        
+                    }
+                    
+                    break;
+                    
+
+                // BALRA
+                case "left":
+                    
+                    break;
+
+                // ERROR
+                default:
+                    console.error("Wrong setting: " + setting + "\nMust be 'init', 'change', 'right' or 'left'.");
+                    
+                    break;
             }
 
+        }
+
+
+        function setFrame1(sub, value) {
+
+            if ( (value < 0) || (value > dekor_gallery.length - 1) || isNaN(value) ) {
+                value = undefined
+            }
+
+        switch (sub) {
+
+            case "prev":
+                frame1.prev = value;
+                break;
+        
+            case "curr":
+                frame1.curr = value;
+                break;
+        
+            case "next":
+                frame1.next = value;
+                break;
+        
+            default:
+                break;
+        }
+    }
+
+        function setFrame0(sub, value) {
+
+                if ( (value < 0) || (value > dekor_gallery.length - 1) || isNaN(value) ) {
+                    value = undefined
+                }
+
+            switch (sub) {
+
+                case "prev":
+                    frame0.prev = value;
+                    break;
+            
+                case "curr":
+                    frame0.curr = value;
+                    break;
+            
+                case "next":
+                    frame0.next = value;
+                    break;
+            
+                default:
+                    break;
+            }
+        }
+
+        // Visszadja, hogy melyik frame a "prev", "curr", "next" szám értékként.
+        function getSubFrame(requested) {
+
+            let result = undefined;
+
+            switch (requested) {
+                case "prev":
+                    
+                    switch (current_dekor_frame) {
+                        case 1:
+                            result = 3;
+                            break;
+                    
+                        case 2:
+                            result = 1;
+                            break;
+                    
+                        case 3:
+                            result = 2;
+                            break;
+                            
+
+                        default:
+                            break;
+                    }
+
+                    break;
+            
+                case "curr":
+                    
+                    switch (current_dekor_frame) {
+                        case 1:
+                            result = 1;
+                            break;
+                    
+                        case 2:
+                            result = 2;
+                            break;
+                    
+                        case 3:
+                            result = 3;
+                            break;
+                            
+
+                        default:
+                            break;
+                    }
+
+                    break;
+            
+                case "next":
+                    
+                    switch (current_dekor_frame) {
+                        case 1:
+                            result = 2;
+                            break;
+                    
+                        case 2:
+                            result = 3;
+                            break;
+                    
+                        case 3:
+                            result = 1;
+                            break;
+                            
+
+                        default:
+                            break;
+                    }
+
+                    break;
+            
+                default:
+
+                    console.error("getSubFrame requested not valid: " + requested + "\nMust be 'prev', 'curr' or 'next'");
+
+                    break;
+            }
+
+            return result;
 
         }
+
+        // Beállítja a frame (0 vagy 1) linkjét a value indexre. Ha a value üres, vagy undefined, akkor leveszi a linket.
+        function setHref( frame, value ) {
+
+            if ( (value < 0) || (value > dekor_gallery.length - 1) || isNaN(value) ) {
+                value = undefined
+            }
+            if( value == undefined) {
+                $($("#dekoracio-gallery .gallery .gallery-frame a")[frame]).removeAttr('href');
+            } else {
+                $($("#dekoracio-gallery .gallery .gallery-frame a")[frame]).attr({'href' : dekor_gallery[value].link});
+            }
+
+        }
+
+        // Beállítja a frame (0 vagy 1) -et üresre, és törli a linket.
+        function setFrameBlank(frame) {
+            setHref(frame);
+            $($(("#dekoracio-gallery .gallery .gallery-frame .frame1"))[frame]).css({"background-image" : ("url(../img/virag_rozsaszin-01.svg)")});
+            $($(("#dekoracio-gallery .gallery .gallery-frame .frame2"))[frame]).css({"background-image" : ("url(../img/virag_rozsaszin-01.svg)")});
+            $($(("#dekoracio-gallery .gallery .gallery-frame .frame3"))[frame]).css({"background-image" : ("url(../img/virag_rozsaszin-01.svg)")});
+        }
+
+        // Beállítja a frame (0 vagy 1) subframe (1, 2 vagy 3) -jét a value index képére.
+        function setFrameBackground(frame, subframe, value) {
+
+
+            // console.log("setFrameBackground:\nframe:" + frame + "\nsubframe: frame" + subframe + "\nvalue: " + value );
+            
+            if ( (value < 0) || (value > dekor_gallery.length - 1) || isNaN(value) ) {
+                value = undefined;
+            }
+            if(value == undefined ) {
+                setFrameBlank(frame);
+            } else {
+                $($(("#dekoracio-gallery .gallery .gallery-frame .frame" + subframe))[frame]).css({"background-image" : ("url(" + dekor_gallery[value].img +")")});
+            }
+
+        }
+
+        // Animálja a frame (0 vagy 1) subframe (1, 2 vagy 3) opacity-jét value (0 vagy 1) értékre.
+        function animateFrame(frame, subframe, value){      
+            
+            console.log("animateFrame:\nframe:" + frame + "\nsubframe: frame" + subframe + "\nvalue: " + value );
+            
+            $($(("#dekoracio-gallery .gallery .gallery-frame .frame" + subframe))[frame]).animate({opacity : value}, 333);
+        }
+
 
 
         // Dekor galéria balra
@@ -225,7 +528,7 @@ $(document).ready(function() {
             // majd frissítjük vele a galériát.
             } else {
 
-                updateDekorGallery(--current_dekor_gallery, 'left');
+                updateDekorGallery('left');
 
             }
         });
@@ -237,16 +540,24 @@ $(document).ready(function() {
             e.preventDefault();
 
             // Ha az utolsó képnél vagyunk, nincs semmi jobbra.
-            if(current_dekor_gallery == dekor_gallery.length - 1) {
+            if(current_dekor_gallery >= dekor_gallery.length - 1) {
 
                 shakeElement(("#dekoracio-gallery .gallery .gallery-frame .frame" + current_dekor_frame),'right')
-                // NINCS ANIMÁCIÓ MÉG    
 
             // Ha nem az utolsónál vagyunk, van jobbra még kép, megnöveljük eggyel az indexet,
             // és frissítjük a galériát.
             } else {
 
-                updateDekorGallery(++current_dekor_gallery, 'right');
+                if(isDualEnabled) {
+
+                    updateDekorGallery('right');
+
+                } else {
+                        
+                    updateDekorGallery('right');
+
+                }
+
 
             }
         });
@@ -287,7 +598,7 @@ $(document).ready(function() {
 
                 } else {
 
-                    updateDekorGallery(++current_dekor_gallery, 'right');
+                    updateDekorGallery('right');
 
                 }
 
@@ -301,7 +612,7 @@ $(document).ready(function() {
                     
                 } else {
 
-                    updateDekorGallery(--current_dekor_gallery, 'left');
+                    updateDekorGallery('left');
 
                 }
                 

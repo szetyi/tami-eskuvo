@@ -54,6 +54,7 @@ p {
     color: #fff;
     font-size: 0.9rem;
     transition: ease 0.2s;
+    box-shadow: 0px 0px 10px rgba(150, 150, 150, 0.3);
 }
 
 .btn:hover {
@@ -82,7 +83,6 @@ header {
     background-image: url(../img/fo_cover/fooldal_01.jpg);
     background-position: center;
     background-size: cover;
-    /* cursor: pointer; */
 }
 
 
@@ -97,7 +97,6 @@ header {
 }
 
 #title img {
-    /* transform: scale(2); */
     height: 100%;
     cursor: pointer;
     z-index: 10;
@@ -138,14 +137,12 @@ main {
     display: flex;
     flex-direction: column;
     height: auto;
-    /* padding: 2%; */
     margin: 0 auto;
 }
 
 #rows > div > img {
     border-radius: 15px;
     padding: 5px;
-    /* margin: 2%; */
 }
 
 #rows > div > img, #thumbnail > img {
@@ -169,7 +166,6 @@ main {
 
 #zoomed {
     position: fixed;
-    /* display: none; */
     display: flex;
     opacity: 0;
     flex-direction: column;
@@ -185,12 +181,10 @@ main {
     position: relative;
     max-width: 80%;
     max-height: 80%;
-    /* margin: 10% 0; */
     margin: auto 0;
     align-self: center;
     justify-self: center;
     border-radius: 15px;
-    /* margin-top: auto; */
     z-index: 15;
     box-shadow: 0 0 50px rgba(0,0,0,0.8);;
 
@@ -200,7 +194,7 @@ main {
     background-image: url(../img/close.svg);
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 100%;
+    background-size: contain;
     filter: invert();
     position: absolute;
     width: 5%;
@@ -225,6 +219,7 @@ main {
     }
 }
 
+/* On screens that are betweem 600 and 992px (tablets) */
 @media screen and (max-width: 992px) {
     
     #title img {
@@ -240,6 +235,7 @@ main {
     }
 }
 
+/* On screens that are at maximum 600px (phones) */
 @media screen and (max-width: 600px) {
 
     

@@ -29,15 +29,20 @@ $(document).ready(function() {
     // MOBILON MÁS GALÉRIA ELRENDEZÉS!
     // -----------------------------------
 
+
+
     // Előre vizsgálunk, mert ha telefonon nyitjuk meg, nem lesz window resize event.
-    changeGalleries();
+    positionGalleries();
 
     // Amikor átméretezzük az ablakot, legyen az asztali, vagy tablet/telefon elforgatás,
     // lefuttatjuk az ellenőrzést.
-    window.onresize = function() {changeGalleries();};
+    window.addEventListener('resize', function(){
+        positionGalleries();
+    });
 
 
-    function changeGalleries() {
+
+    function positionGalleries() {
 
         // Ha megegyezünk a telefon media-query-vel, akkor a galériákat oszlopszerűen rendezzük el.
         if (window.matchMedia('(max-width: 600px)').matches) {
