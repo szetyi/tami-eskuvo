@@ -56,13 +56,6 @@ $(document).ready(function() {
 
     function main(){    
 
-        dekor_gallery.forEach(e => {
-            console.log(e.text);
-        });
-        // console.log(dekor_gallery);     
-        
-           
-
         let frame0 = {
             prev : undefined,
             curr : undefined,
@@ -105,13 +98,19 @@ $(document).ready(function() {
             // akkor lehet két galléria kép egymás mellett. 
             // Azt is vizsgálni kell, hogy mennyi megjelenítendő kép van a galériában,
             // ha kevesebb, mint a megadott érték, akkor felesleges egyszerre többet mutatni.
-    
+            
+            let elements = $($(".gallery-frame"));
+
             if (window.matchMedia('(max-width: 992px)').matches) {
     
                 // Kicsi képernyő, nem kell a kettőzés.
                 // console.log("Screen small, set gallery to single");
                 isDualEnabled = false;
-                $($("#dekoracio-gallery .gallery .gallery-frame")[1]).hide();
+                for (let i = 0; i < elements.length; i+=2) {
+                    
+                    $($(".gallery-frame")[i+1]).hide();
+                    
+                }
 
                 
             } else {
@@ -123,14 +122,31 @@ $(document).ready(function() {
                     // Ha alatta vagyunk akkor nem kell kettőzni.
                     // console.log("Gallery not large enough, set gallery to single");
                     isDualEnabled = false;
-                    $($("#dekoracio-gallery .gallery .gallery-frame")[1]).hide();
+                    
+                    for (let i = 0; i < elements.length; i+=2) {
+                        
+                        $($(".gallery-frame")[i+1]).hide();
+                        
+                    }
+                    // $($("#dekoracio-gallery .gallery .gallery-frame")[1]).hide();
     
                 } else {
     
                     // Ha felette vagyunk, akkor kell!
                     // console.log("Set gallery to dual");
                     isDualEnabled = true;
-                    $($("#dekoracio-gallery .gallery .gallery-frame")[1]).show();
+
+
+                    for (let i = 0; i < elements.length; i+=2) {
+                    
+                        $($(".gallery-frame")[i+1]).show();
+                        
+                    }
+                    // $("#dekoracio-gallery .gallery .gallery-frame").each((index,element) => {
+                    //     $(element).show()
+                    // });
+                    
+                    // $($("#dekoracio-gallery .gallery .gallery-frame")[1]).show();
 
                 }
     
@@ -273,44 +289,63 @@ $(document).ready(function() {
 
                     if (isDualEnabled) {
 
+                        // Animáljuk a current subframe-et 0 opacityre, a nextet pedig 1-re
                         animateFrame(0, getSubFrame("curr"), 0);
                         animateFrame(0, getSubFrame("next"), 1);
                         
                         animateFrame(1, getSubFrame("curr"), 0);
                         animateFrame(1, getSubFrame("next"), 1);
                         
-                        setTimeout(() => {
-                            
-                            current_dekor_gallery += 2;
-                            
-                            setFrameBackground(0, getSubFrame("curr"), frame0.curr);
-                            setFrame0("curr", frame0.curr + 2);
+                        // Átállítjuk a current frame-et a jelenlegi next-re 
+                        // A current gallery-t pedig megnöveljük kettővel.
+                        current_dekor_frame = getSubFrame("next");
+                        current_dekor_gallery += 2;
+                        
+                        // ----- FRAME 0 -----
+                        // Beállítjuk a prev-et az most elváltott képre.
+                        setFrameBackground(0, getSubFrame("prev"), frame0.curr);
+                        setFrame0("prev", frame0.curr);
 
-                            setFrameBackground(0, getSubFrame("prev"), frame0.prev);
-                            setFrame0("prev", frame0.curr - 2);
+                        // Frissítjük a curr-t a jelenlegi next-re, mert arra váltottunk.
+                        setFrame0("curr", frame0.next);
 
-                            setFrameBackground(0, getSubFrame("next"), frame0.next);
-                            setFrame0("next", frame0.curr + 2);
+                        // Beállítjuk a next-et az új curr utáni kettőre. 
+                        setFrame0("next", frame0.curr + 2);
+                        setFrameBackground(0, getSubFrame("next"), frame0.next);
 
-                            setFrameBackground(1, getSubFrame("curr"), frame0.curr);
-                            setFrame1("curr", frame1.curr + 2);
+                        // ----- FRAME 1 -----
+                        // ua. mint a frame 0
 
-                            setFrameBackground(1, getSubFrame("prev"), frame1.prev);
-                            setFrame1("prev", frame1.curr - 2);
+                        setFrameBackground(1, getSubFrame("prev"), frame1.curr);
+                        setFrame1("prev", frame1.curr);
 
-                            setFrameBackground(1, getSubFrame("next"), frame1.next);
-                            setFrame1("next", frame1.curr + 2);
+                        setFrame1("curr", frame1.next);
 
-                            current_dekor_frame = getSubFrame("next");
+                        setFrame1("next", frame1.curr + 2);
+                        setFrameBackground(1, getSubFrame("next"), frame1.next);
 
-                                
-                        }, 333);
-
-
-
-
+                    // Ha egyes galériánk van:
                     } else {
                         
+                        // Animáljuk a current subframe-et 0 opacityre, a nextet pedig 1-re
+                        animateFrame(0, getSubFrame("curr"), 0);
+                        animateFrame(0, getSubFrame("next"), 1);
+
+                        // Átállítjuk a current frame-et a jelenlegi next-re 
+                        // A current gallery-t pedig megnöveljük eggyel.
+                        current_dekor_frame = getSubFrame("next");
+                        current_dekor_gallery++;
+                        
+                        // Beállítjuk a prev-et az most elváltott képre.
+                        setFrameBackground(0, getSubFrame("prev"), frame0.curr);
+                        setFrame0("prev", frame0.curr);
+
+                        // Frissítjük a curr-t a jelenlegi next-re, mert arra váltottunk.
+                        setFrame0("curr", frame0.next);
+
+                        // Beállítjuk a next-et az új curr utánira. 
+                        setFrame0("next", frame0.curr + 1);
+                        setFrameBackground(0, getSubFrame("next"), frame0.next);
                     }
                     
                     break;
@@ -318,6 +353,68 @@ $(document).ready(function() {
 
                 // BALRA
                 case "left":
+                    
+
+                    if (isDualEnabled) {
+
+                        // Animáljuk a current subframe-et 0 opacityre, a prevet pedig 1-re
+                        animateFrame(0, getSubFrame("curr"), 0);
+                        animateFrame(0, getSubFrame("prev"), 1);
+                        
+                        animateFrame(1, getSubFrame("curr"), 0);
+                        animateFrame(1, getSubFrame("prev"), 1);
+                        
+                        // Átállítjuk a current frame-et a jelenlegi prev-re 
+                        // A current gallery-t pedig csökkentjük kettővel.
+                        current_dekor_frame = getSubFrame("prev");
+                        current_dekor_gallery -= 2;
+                        
+                        // ----- FRAME 0 -----
+                        // Beállítjuk a next-et az most elváltott képre.
+                        setFrameBackground(0, getSubFrame("next"), frame0.curr);
+                        setFrame0("next", frame0.curr);
+
+                        // Frissítjük a curr-t a jelenlegi prev-re, mert arra váltottunk.
+                        setFrame0("curr", frame0.prev);
+
+                        // Beállítjuk a prev-et az új curr előtti kettőre. 
+                        setFrame0("prev", frame0.curr - 2);
+                        setFrameBackground(0, getSubFrame("prev"), frame0.prev);
+
+                        // ----- FRAME 1 -----
+                        // ua. mint a frame 0
+
+                        setFrameBackground(1, getSubFrame("next"), frame1.curr);
+                        setFrame1("next", frame1.curr);
+
+                        setFrame1("curr", frame1.prev);
+
+                        setFrame1("prev", frame1.curr - 2);
+                        setFrameBackground(1, getSubFrame("prev"), frame1.prev);
+
+                    // Ha egyes galériánk van:
+                    } else {
+                        
+                        // Animáljuk a current subframe-et 0 opacityre, a prevet pedig 1-re
+                        animateFrame(0, getSubFrame("curr"), 0);
+                        animateFrame(0, getSubFrame("prev"), 1);
+
+                        // Átállítjuk a current frame-et a jelenlegi next-re 
+                        // A current gallery-t pedig megnöveljük eggyel.
+                        current_dekor_frame = getSubFrame("prev");
+                        current_dekor_gallery--;
+                        
+                        // Beállítjuk a next-et az most elváltott képre.
+                        setFrameBackground(0, getSubFrame("next"), frame0.curr);
+                        setFrame0("next", frame0.curr);
+
+                        // Frissítjük a curr-t a jelenlegi prev-re, mert arra váltottunk.
+                        setFrame0("curr", frame0.prev);
+
+                        // Beállítjuk a prev-et az új curr előttire. 
+                        setFrame0("prev", frame0.curr - 1);
+                        setFrameBackground(0, getSubFrame("prev"), frame0.prev);
+                    }
                     
                     break;
 
@@ -479,11 +576,9 @@ $(document).ready(function() {
         }
 
         // Beállítja a frame (0 vagy 1) -et üresre, és törli a linket.
-        function setFrameBlank(frame) {
+        function setFrameBlank(frame, subframe) {
             setHref(frame);
-            $($(("#dekoracio-gallery .gallery .gallery-frame .frame1"))[frame]).css({"background-image" : ("url(../img/virag_rozsaszin-01.svg)")});
-            $($(("#dekoracio-gallery .gallery .gallery-frame .frame2"))[frame]).css({"background-image" : ("url(../img/virag_rozsaszin-01.svg)")});
-            $($(("#dekoracio-gallery .gallery .gallery-frame .frame3"))[frame]).css({"background-image" : ("url(../img/virag_rozsaszin-01.svg)")});
+            $($(("#dekoracio-gallery .gallery .gallery-frame .frame" + subframe))[frame]).css({"background-image" : ("url(../img/virag_rozsaszin-01.svg)")});
         }
 
         // Beállítja a frame (0 vagy 1) subframe (1, 2 vagy 3) -jét a value index képére.
@@ -496,7 +591,7 @@ $(document).ready(function() {
                 value = undefined;
             }
             if(value == undefined ) {
-                setFrameBlank(frame);
+                setFrameBlank(frame, subframe);
             } else {
                 $($(("#dekoracio-gallery .gallery .gallery-frame .frame" + subframe))[frame]).css({"background-image" : ("url(" + dekor_gallery[value].img +")")});
             }
@@ -506,7 +601,7 @@ $(document).ready(function() {
         // Animálja a frame (0 vagy 1) subframe (1, 2 vagy 3) opacity-jét value (0 vagy 1) értékre.
         function animateFrame(frame, subframe, value){      
             
-            console.log("animateFrame:\nframe:" + frame + "\nsubframe: frame" + subframe + "\nvalue: " + value );
+            // console.log("animateFrame:\nframe:" + frame + "\nsubframe: frame" + subframe + "\nvalue: " + value );
             
             $($(("#dekoracio-gallery .gallery .gallery-frame .frame" + subframe))[frame]).animate({opacity : value}, 333);
         }
@@ -519,7 +614,7 @@ $(document).ready(function() {
             e.preventDefault();
             
             //Ha a 0. képnél vagyunk, akkor nincs balra semmi, nem lépünk tovább
-            if(current_dekor_gallery == 0) {
+            if(current_dekor_gallery <= 0) {
 
                 shakeElement(("#dekoracio-gallery .gallery .gallery-frame .frame" + current_dekor_frame),'left')
                 // NINCS ANIMÁCIÓ MÉG
@@ -540,7 +635,7 @@ $(document).ready(function() {
             e.preventDefault();
 
             // Ha az utolsó képnél vagyunk, nincs semmi jobbra.
-            if(current_dekor_gallery >= dekor_gallery.length - 1) {
+            if(current_dekor_gallery >= dekor_gallery.length - (isDualEnabled ? 2 : 1)) {
 
                 shakeElement(("#dekoracio-gallery .gallery .gallery-frame .frame" + current_dekor_frame),'right')
 
@@ -548,16 +643,7 @@ $(document).ready(function() {
             // és frissítjük a galériát.
             } else {
 
-                if(isDualEnabled) {
-
-                    updateDekorGallery('right');
-
-                } else {
-                        
-                    updateDekorGallery('right');
-
-                }
-
+                updateDekorGallery('right');
 
             }
         });
@@ -592,7 +678,7 @@ $(document).ready(function() {
             if(startX > endX + 50) {
                 
                 // lsd. jobb gomb
-                if(current_dekor_gallery == dekor_gallery.length - 1) {
+                if(current_dekor_gallery >= dekor_gallery.length - (isDualEnabled ? 2 : 1)) {
 
                     shakeElement(("#dekoracio-gallery .gallery .gallery-frame .frame" + current_dekor_frame),"right");
 
@@ -606,7 +692,7 @@ $(document).ready(function() {
             } else if(startX + 50 < endX) {
                 
                 // lsd. bal gomb
-                if(current_dekor_gallery == 0) {
+                if(current_dekor_gallery <= 0) {
 
                     shakeElement(("#dekoracio-gallery .gallery .gallery-frame .frame" + current_dekor_frame),"left");
                     
