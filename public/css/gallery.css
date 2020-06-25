@@ -51,6 +51,7 @@ p {
     border-radius: 10px;
     font-family: 'Montserrat', 'Roboto', sans-serif;
     text-transform: uppercase;
+    text-shadow: 0 0 2px #aaa;
     color: #fff;
     font-size: 0.9rem;
     transition: ease 0.2s;

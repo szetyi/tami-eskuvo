@@ -165,9 +165,6 @@ $(document).ready(function() {
                     // Ha kettős galérián inicializálunk, akkor beállítjuk a két linket,
                     // Az első két képet, és az utánuk jövő két képet.
                     if (isDualEnabled) {
-                        
-                        setHref(0,0);
-                        setHref(1,1);
 
                         setFrame0("curr", 0);
                         setFrameBackground(0,getSubFrame("curr"), frame0.curr);
@@ -184,7 +181,6 @@ $(document).ready(function() {
                     // Ha egyes galérián inicializálunk, akkor csak az első framere kell megcsinálni.
                     } else {
                         
-                        setHref(0,0);
                         setFrame0("curr", 0);
                         setFrameBackground(0,getSubFrame("curr"), frame0.curr);
                         setFrame0("next", 1);
@@ -199,35 +195,7 @@ $(document).ready(function() {
 
                     // Ha kettősről váltunk egyesre:
                     if(isDualEnabled) {
-/*
-                        // Ha az első képen vagyunk, nincs prev, de van next.
-                        if(frame0.curr == 0) {
-
-                            setFrame0("prev", undefined)
-                            setFrame0("next", frame0.curr + 1);
-                            setFrameBackground(0, getSubFrame("next"), frame0.next);
-
-                        // Ha nem az elsőn állunk, van prev.
-                        } else {
-
-                            setFrame0("prev",frame0.curr - 1);
-                            setFrameBackground(0,getSubFrame("prev"),frame0.prev);
-
-                            // DE! nem biztos, hogy van next!
-                            if(frame0.curr == dekor_gallery.length-1) {
-
-                                setFrame0("next", undefined);
-
-                            } else {
-
-                                setFrame0("next", frame0.curr + 1);
-                                setFrameBackground(0,getSubFrame("next"),frame0.next);
-
-                            }
-
-                        }
-*/
-
+                        
                         setFrame0("next", frame0.curr + 1);
                         setFrameBackground(0, getSubFrame("next"), frame0.next);
                         setFrame0("prev", frame0.curr - 1);
@@ -312,6 +280,8 @@ $(document).ready(function() {
                         // Beállítjuk a next-et az új curr utáni kettőre. 
                         setFrame0("next", frame0.curr + 2);
                         setFrameBackground(0, getSubFrame("next"), frame0.next);
+
+
 
                         // ----- FRAME 1 -----
                         // ua. mint a frame 0
@@ -424,6 +394,9 @@ $(document).ready(function() {
                     
                     break;
             }
+
+            setHref(0,frame0.curr);
+            if(isDualEnabled) setHref(1,frame1.curr);
 
         }
 
@@ -569,16 +542,19 @@ $(document).ready(function() {
             }
             if( value == undefined) {
                 $($("#dekoracio-gallery .gallery .gallery-frame a")[frame]).removeAttr('href');
+                $($("#dekoracio-gallery .gallery .gallery-frame a")[frame]).css({"cursor" : "default"});
+
             } else {
                 $($("#dekoracio-gallery .gallery .gallery-frame a")[frame]).attr({'href' : dekor_gallery[value].link});
+                $($("#dekoracio-gallery .gallery .gallery-frame a")[frame]).css({"cursor" : "pointer"});
             }
 
         }
 
         // Beállítja a frame (0 vagy 1) -et üresre, és törli a linket.
         function setFrameBlank(frame, subframe) {
-            setHref(frame);
-            $($(("#dekoracio-gallery .gallery .gallery-frame .frame" + subframe))[frame]).css({"background-image" : ("url(../img/virag_rozsaszin-01.svg)")});
+            // setHref(frame);
+            $($(("#dekoracio-gallery .gallery .gallery-frame .frame" + subframe))[frame]).css({"background-image" : "url(../img/placeholder-01.svg)"});
         }
 
         // Beállítja a frame (0 vagy 1) subframe (1, 2 vagy 3) -jét a value index képére.
@@ -590,6 +566,7 @@ $(document).ready(function() {
             if ( (value < 0) || (value > dekor_gallery.length - 1) || isNaN(value) ) {
                 value = undefined;
             }
+
             if(value == undefined ) {
                 setFrameBlank(frame, subframe);
             } else {

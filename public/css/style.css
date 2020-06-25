@@ -137,12 +137,13 @@ header {
     font-family: 'Montserrat', 'Roboto', sans-serif;
     text-transform: uppercase;
     color: #fff;
+    text-shadow: 0 0 2px #aaa;
     font-size: 1.2rem;
     transition: ease 0.2s;
 }
 
 .btn:hover {
-    box-shadow: 0 0 10px var(--primary-color);;
+    box-shadow: 0 0 15px var(--primary-color);
     cursor: pointer;
 }
 
@@ -264,6 +265,7 @@ div.card .btn {
     background-position: center;
     background-size: cover;
     z-index: 9;
+    border-radius: 2px;
 }
 
 .frame2 {
@@ -275,6 +277,7 @@ div.card .btn {
     background-position: center;
     background-size: cover;
     z-index: 10;
+    border-radius: 2px;
 }
 
 .frame3 {
@@ -286,6 +289,7 @@ div.card .btn {
     background-position: center;
     background-size: cover;
     z-index: 11;
+    border-radius: 2px;
 }
 
 .gallery-frame a {
