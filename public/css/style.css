@@ -5,14 +5,6 @@ SVG COLOR CHANGER
 https://codepen.io/sosuke/pen/Pjoqqp
 */
 
-/* @font-face {
-    font-family: 'Akrobat';
-    src: url('../font/Akrobat/WEB/Akrobat-Regular.eot'); 
-    src: url('../font/Akrobat/WEB/Akrobat-Regular.eot?#iefix') format('embedded-opentype'), 
-         url('../font/Akrobat/WEB/Akrobat-Regular.woff') format('woff'), 
-         url('../font/Akrobat/TTF/Akrobat-Regular.ttf')  format('truetype'), 
-  } */
-
 /* GENERAL */
 
 :root {
@@ -353,32 +345,38 @@ div.card .btn {
     flex-direction: row;
 }
 
-#rolunk-content > div {
+#rolunk-text {
     align-self: center;
     margin: 5%;
+    width: 65%;
 }
 
-#rolunk-content > div > ul {
+#rolunk-text > ul {
     margin: 10%;
     list-style: none;
     justify-self: center;
     text-align: left;
 }
 
-#rolunk-content > div > ul > li {
+#rolunk-text > ul > li {
     padding-bottom: 5%;
     font-size: 0.8rem;
 }
 
-#rolunk-content > div > ul > li > a {
+#rolunk-text > ul > li > a {
     text-decoration: none;
     color: #000;
 }
 
-#rolunk-content > img {
-    margin: 5%;
+#rolunk-img {
+    /* margin: 5%; */
     width: 35%;
-    height: 100%;
+    align-self: center;
+}
+
+#rolunk-img > img {
+    /* width: 35%; */
+    /* height: 100%; */
     border-radius: 5px;
 }
 
@@ -652,16 +650,18 @@ div.card .btn {
     #rolunk-content {
         flex-direction: column;
     }
-    
+
+    #rolunk-text, #rolunk-img {
+        width: 100%
+    }
 
     #rolunk-content > div > ul {
         margin: 10% 15%;
     }
 
-    #rolunk-content > img {
+    #rolunk-img > img {
         margin: auto;
-        width: 75%;
-        height: 75%;
+        width: 60%;
     }
 
     #arajanlat > ul {
@@ -746,7 +746,7 @@ div.card .btn {
 
 /* RÓLUNK */
 
-    #rolunk-content > div {
+    #rolunk-text, #rolunk-img {
         margin: 0;
     }
 
@@ -754,7 +754,7 @@ div.card .btn {
         margin: 10% 0;
     }
     
-    #rolunk-content > img {
+    #rolunk-img > img {
         width: 100%;
     }
 

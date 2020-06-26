@@ -43,7 +43,7 @@ $(document).ready(function() {
         let dualGalleryMinimum = 5;
 
         // Ebben a változóban tároljuk, hogy éppen kettős gallérián vagyunk e, vagy sem.
-        let isDualEnabled = false;
+        // let isDualEnabled = false;
         
         // Jelenlegi kép index
         let current_grafika_gallery = 0;
@@ -51,56 +51,32 @@ $(document).ready(function() {
         // Jelenleg látszó frame ( három van belőle, melyek a sima előre-hátra transition-höz kellenek. )
         let current_grafika_frame = 2;
 
+        let dual_status = undefined;
+
         // Galéria inicializálása
-        // checkDualGrafikaGallery(dualGalleryMinimum);
-        updateGrafikaGallery('init');
+        let wait_for_dual_check = setInterval(() => {
+
+            if(isDualEnabled != undefined) {
+                dual_status = isDualEnabled;
+                updateGrafikaGallery("init");
+                clearInterval(wait_for_dual_check);
+            }
+
+        }, 100);
+
+        
+
+        let listen_for_dual_change = setInterval(() => {
+
+            if(dual_status != isDualEnabled) {
+                // Megváltozott a dual beállítás.
+                dual_status = isDualEnabled;
+                updateGrafikaGallery("change");
+            }
+
+        }, 100);
 
 
-        // Amikor átméretezzük az ablakot, legyen az asztali, vagy tablet/telefon elforgatás,
-        // lefuttatjuk az ellenőrzést.
-        // window.addEventListener('resize', function(){
-        //     checkDualGrafikaGallery(dualGalleryMinimum);
-        // });
-
-        // function checkDualGrafikaGallery(treshold) {
-
-        //     // Ha elég széles a képernyő, azaz tabletnél nagyobb képernyő vagyunk,
-        //     // akkor lehet két galléria kép egymás mellett. 
-        //     // Azt is vizsgálni kell, hogy mennyi megjelenítendő kép van a galériában,
-        //     // ha kevesebb, mint a megadott érték, akkor felesleges egyszerre többet mutatni.
-    
-        //     if (window.matchMedia('(max-width: 992px)').matches) {
-    
-        //         // Kicsi képernyő, nem kell a kettőzés.
-        //         // console.log("Screen small, set gallery to single");
-        //         isDualEnabled = false;
-        //         $($("#grafika-gallery .gallery .gallery-frame")[1]).hide();
-
-                
-        //     } else {
-    
-        //         // Nagy képernyő, nézzük meg, hogy elértük e a minimumot
-                
-        //         if( grafika_gallery.length < treshold ) {
-                    
-        //             // Ha alatta vagyunk akkor nem kell kettőzni.
-        //             // console.log("Gallery not large enough, set gallery to single");
-        //             isDualEnabled = false;
-        //             $($("#grafika-gallery .gallery .gallery-frame")[1]).hide();
-    
-        //         } else {
-    
-        //             // Ha felette vagyunk, akkor kell!
-        //             // console.log("Set gallery to dual");
-        //             isDualEnabled = true;
-        //             $($("#grafika-gallery .gallery .gallery-frame")[1]).show();
-
-        //         }
-    
-        //     }
-            
-    
-        // }
 
         function updateGrafikaGallery(setting) {
 
@@ -112,6 +88,13 @@ $(document).ready(function() {
                     // Ha kettős galérián inicializálunk, akkor beállítjuk a két linket,
                     // Az első két képet, és az utánuk jövő két képet.
                     if (isDualEnabled) {
+
+                        animateFrame(0,1,0);
+                        animateFrame(0,2,1);
+                        animateFrame(0,3,0);
+                        animateFrame(1,1,0);
+                        animateFrame(1,2,1);
+                        animateFrame(1,3,0);
 
                         setFrame0("curr", 0);
                         setFrameBackground(0,getSubFrame("curr"), frame0.curr);
@@ -128,6 +111,13 @@ $(document).ready(function() {
                     // Ha egyes galérián inicializálunk, akkor csak az első framere kell megcsinálni.
                     } else {
                         
+                        animateFrame(0,1,0);
+                        animateFrame(0,2,1);
+                        animateFrame(0,3,0);
+                        animateFrame(1,1,0);
+                        animateFrame(1,2,0);
+                        animateFrame(1,3,0);
+
                         setFrame0("curr", 0);
                         setFrameBackground(0,getSubFrame("curr"), frame0.curr);
                         setFrame0("next", 1);
@@ -140,36 +130,21 @@ $(document).ready(function() {
                 // VÁLTÁS
                 case "change":
 
+                    if(current_grafika_gallery < 0) {
+                        current_grafika_gallery = 0;
+                    } else if (current_grafika_gallery > grafika_gallery.length - 1) {
+                        current_grafika_gallery = grafika_gallery.length;
+                    }
+
                     // Ha kettősről váltunk egyesre:
-                    if(isDualEnabled) {
-/*
-                        // Ha az első képen vagyunk, nincs prev, de van next.
-                        if(frame0.curr == 0) {
-
-                            setFrame0("prev", undefined)
-                            setFrame0("next", frame0.curr + 1);
-                            setFrameBackground(0, getSubFrame("next"), frame0.next);
-
-                        // Ha nem az elsőn állunk, van prev.
-                        } else {
-
-                            setFrame0("prev",frame0.curr - 1);
-                            setFrameBackground(0,getSubFrame("prev"),frame0.prev);
-
-                            // DE! nem biztos, hogy van next!
-                            if(frame0.curr == grafika_gallery.length-1) {
-
-                                setFrame0("next", undefined);
-
-                            } else {
-
-                                setFrame0("next", frame0.curr + 1);
-                                setFrameBackground(0,getSubFrame("next"),frame0.next);
-
-                            }
-
-                        }
-*/
+                    if(!isDualEnabled) {
+                        
+                        animateFrame(0,getSubFrame("prev"),0);
+                        animateFrame(0,getSubFrame("curr"),1);
+                        animateFrame(0,getSubFrame("next"),0);
+                        animateFrame(1,getSubFrame("prev"),0);
+                        animateFrame(1,getSubFrame("curr"),0);
+                        animateFrame(1,getSubFrame("next"),0);
 
                         setFrame0("next", frame0.curr + 1);
                         setFrameBackground(0, getSubFrame("next"), frame0.next);
@@ -180,45 +155,56 @@ $(document).ready(function() {
                     // Ha egyesről váltunk kettősre:
                     } else {
 
+                        animateFrame(0,getSubFrame("prev"),0);
+                        animateFrame(0,getSubFrame("curr"),1);
+                        animateFrame(0,getSubFrame("next"),0);
+                        animateFrame(1,getSubFrame("prev"),0);
+                        animateFrame(1,getSubFrame("curr"),1);
+                        animateFrame(1,getSubFrame("next"),0);
+
                         // Attól függően, hogy páros, vagy páratlan a current, mást csinálunk!
+                        let current = frame0.curr;
 
                         // Páros
-                        if (frame0.curr % 2 == 0) {
+                        if (current % 2 == 0) {
                             
-                            setFrame1("curr", frame0.next)
-                            setFrameBackground(1, getSubFrame("curr"), frame1.curr);
+                            // setFrame1("curr", frame0.next)
+                            // setFrameBackground(1, getSubFrame("curr"), frame1.curr);
+                            setFrame1("curr", current + 1);
+                            setFrameBackground(1,getSubFrame("curr"), frame1.curr);
 
-                            setFrame1("prev", frame1.curr - 2);
+                            setFrame1("prev", current - 1);
                             setFrameBackground(1, getSubFrame("prev"), frame1.prev);
 
-                            setFrame1("next", frame1.curr + 2);
+                            setFrame1("next", current + 3);
                             setFrameBackground(1, getSubFrame("next"), frame1.next);
 
-                            setFrame0("prev", frame0.curr - 2);
+                            setFrame0("prev", current - 2);
                             setFrameBackground(0, getSubFrame("prev"), frame0.prev);
 
-                            setFrame0("next", frame0.curr + 2);
+                            setFrame0("next", current + 2);
                             setFrameBackground(0, getSubFrame("next"), frame0.next);
+
 
                         // Páratlan
                         } else {
                             
-                            setFrame1("curr", frame0.curr);
-                            setFrameBackground(1, getSubFrame("curr"). frame1.curr);
+                            setFrame1("curr", current);
+                            setFrameBackground(1, getSubFrame("curr"), frame1.curr);
 
-                            setFrame1("prev", frame1.curr - 2);
+                            setFrame1("prev", current - 2);
                             setFrameBackground(1, getSubFrame("prev"), frame1.prev);
 
-                            setFrame1("next", frame1.curr + 2);
+                            setFrame1("next", current + 2);
                             setFrameBackground(1, getSubFrame("next"), frame1.next);
 
-                            setFrame0("curr", frame0.prev);
-                            setFrameBackground(0, getSubFrame("curr"). frame0.curr);
+                            setFrame0("curr", current - 1);
+                            setFrameBackground(0, getSubFrame("curr"), frame0.curr);
 
-                            setFrame0("prev", frame0.curr - 2);
+                            setFrame0("prev", current - 3);
                             setFrameBackground(0, getSubFrame("prev"), frame0.prev);
 
-                            setFrame0("next", frame0.curr + 2);
+                            setFrame0("next", current + 1);
                             setFrameBackground(0, getSubFrame("next"), frame0.next);
 
                         }
@@ -368,6 +354,9 @@ $(document).ready(function() {
                     break;
             }
 
+            // console.log("dual: " + isDualEnabled + "\nsetting: " + setting);
+            // console.table([frame0,frame1]);
+
         }
 
 
@@ -506,7 +495,7 @@ $(document).ready(function() {
 
         // Beállítja a frame (0 vagy 1) -et üresre, és törli a linket.
         function setFrameBlank(frame, subframe) {
-            $($(("#grafika-gallery .gallery .gallery-frame .frame" + subframe))[frame]).css({"background-image" : ("url(../img/virag_rozsaszin-01.svg)")});
+            $($(("#grafika-gallery .gallery .gallery-frame .frame" + subframe))[frame]).css({"background-image" : ("url(../img/placeholder-01.svg)")});
         }
 
         // Beállítja a frame (0 vagy 1) subframe (1, 2 vagy 3) -jét a value index képére.
@@ -527,10 +516,7 @@ $(document).ready(function() {
         }
 
         // Animálja a frame (0 vagy 1) subframe (1, 2 vagy 3) opacity-jét value (0 vagy 1) értékre.
-        function animateFrame(frame, subframe, value){      
-            
-            // console.log("animateFrame:\nframe:" + frame + "\nsubframe: frame" + subframe + "\nvalue: " + value );
-            
+        function animateFrame(frame, subframe, value){
             $($(("#grafika-gallery .gallery .gallery-frame .frame" + subframe))[frame]).animate({opacity : value}, 333);
         }
 
@@ -541,19 +527,24 @@ $(document).ready(function() {
 
             e.preventDefault();
             
-            //Ha a 0. képnél vagyunk, akkor nincs balra semmi, nem lépünk tovább
-            if(current_grafika_gallery <= 0) {
+            if(isDualEnabled) {
 
-                shakeElement(("#grafika-gallery .gallery .gallery-frame .frame" + current_grafika_frame),'left')
-                // NINCS ANIMÁCIÓ MÉG
+                if(frame0.prev == undefined && frame1.prev == undefined ) {
+                    shakeElement(("#grafika-gallery .gallery .gallery-frame .frame" + current_grafika_frame),'left');
+                } else {
+                    updateGrafikaGallery("left");
+                }
 
-            // Ha nem a 0. képnél vagyunk, akkor van mit mutatni, csökkentjük a jelenlegi indexet eggyel,
-            // majd frissítjük vele a galériát.
             } else {
 
-                updateGrafikaGallery('left');
+                if (frame0.prev == undefined ) {
+                    shakeElement(("#grafika-gallery .gallery .gallery-frame .frame" + current_grafika_frame),'left');
+                } else {
+                    updateGrafikaGallery("left");
+                }
 
             }
+
         });
 
 
@@ -562,16 +553,21 @@ $(document).ready(function() {
 
             e.preventDefault();
 
-            // Ha az utolsó képnél vagyunk, nincs semmi jobbra.
-            if(current_grafika_gallery >= grafika_gallery.length - (isDualEnabled ? 2 : 1)) {
+            if(isDualEnabled) {
 
-                shakeElement(("#grafika-gallery .gallery .gallery-frame .frame" + current_grafika_frame),'right')
+                if(frame0.next == undefined && frame1.next == undefined ) {
+                    shakeElement(("#grafika-gallery .gallery .gallery-frame .frame" + current_grafika_frame),'right');
+                } else {
+                    updateGrafikaGallery("right");
+                }
 
-            // Ha nem az utolsónál vagyunk, van jobbra még kép, megnöveljük eggyel az indexet,
-            // és frissítjük a galériát.
             } else {
 
-                updateGrafikaGallery('right');
+                if (frame0.next == undefined ) {
+                    shakeElement(("#grafika-gallery .gallery .gallery-frame .frame" + current_grafika_frame),'right');
+                } else {
+                    updateGrafikaGallery("right");
+                }
 
             }
         });
@@ -606,13 +602,21 @@ $(document).ready(function() {
             if(startX > endX + 50) {
                 
                 // lsd. jobb gomb
-                if(current_grafika_gallery >= grafika_gallery.length - (isDualEnabled ? 2 : 1)) {
+                if(isDualEnabled) {
 
-                    shakeElement(("#grafika-gallery .gallery .gallery-frame .frame" + current_grafika_frame),"right");
+                    if(frame0.next == undefined && frame1.next == undefined ) {
+                        shakeElement(("#grafika-gallery .gallery .gallery-frame .frame" + current_grafika_frame),'right');
+                    } else {
+                        updateGrafikaGallery("right");
+                    }
 
                 } else {
 
-                    updateGrafikaGallery('right');
+                    if (frame0.next == undefined ) {
+                        shakeElement(("#grafika-gallery .gallery .gallery-frame .frame" + current_grafika_frame),'right');
+                    } else {
+                        updateGrafikaGallery("right");
+                    }
 
                 }
 
@@ -620,13 +624,21 @@ $(document).ready(function() {
             } else if(startX + 50 < endX) {
                 
                 // lsd. bal gomb
-                if(current_grafika_gallery <= 0) {
+                if(isDualEnabled) {
 
-                    shakeElement(("#grafika-gallery .gallery .gallery-frame .frame" + current_grafika_frame),"left");
-                    
+                    if(frame0.prev == undefined && frame1.prev == undefined ) {
+                        shakeElement(("#grafika-gallery .gallery .gallery-frame .frame" + current_grafika_frame),'left');
+                    } else {
+                        updateGrafikaGallery("left");
+                    }
+
                 } else {
 
-                    updateGrafikaGallery('left');
+                    if (frame0.prev == undefined ) {
+                        shakeElement(("#grafika-gallery .gallery .gallery-frame .frame" + current_grafika_frame),'left');
+                    } else {
+                        updateGrafikaGallery("left");
+                    }
 
                 }
                 

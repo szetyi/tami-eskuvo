@@ -1,4 +1,8 @@
+
+var isDualEnabled = undefined;
+
 $(document).ready(function() {
+
 
     // Ebbe a tömbbe töltjük be a galéria objektumokat, melyek
     // {
@@ -73,7 +77,7 @@ $(document).ready(function() {
         let dualGalleryMinimum = 5;
 
         // Ebben a változóban tároljuk, hogy éppen kettős gallérián vagyunk e, vagy sem.
-        let isDualEnabled = false;
+        // var isDualEnabled = false;
         
         // Jelenlegi kép index
         let current_dekor_gallery = 0;
@@ -89,7 +93,16 @@ $(document).ready(function() {
         // Amikor átméretezzük az ablakot, legyen az asztali, vagy tablet/telefon elforgatás,
         // lefuttatjuk az ellenőrzést.
         window.addEventListener('resize', function(){
+            // Eltároljuk, hogy jelenleg melyik galérián vagyunk.
+            let is_dual_enabled_currently = isDualEnabled;
+
+            // Ellenőrzést futtatunk, hogy kell e váltani.
             checkDualDekorGallery(dualGalleryMinimum);
+
+            // Ha változás történt, futtatjuk az updatet "change" settinggel.
+            if(is_dual_enabled_currently != isDualEnabled) {
+                updateDekorGallery("change");
+            }
         });
 
         function checkDualDekorGallery(treshold) {
@@ -100,6 +113,8 @@ $(document).ready(function() {
             // ha kevesebb, mint a megadott érték, akkor felesleges egyszerre többet mutatni.
             
             let elements = $($(".gallery-frame"));
+            // console.log(elements);
+            
 
             if (window.matchMedia('(max-width: 992px)').matches) {
     
@@ -166,6 +181,13 @@ $(document).ready(function() {
                     // Az első két képet, és az utánuk jövő két képet.
                     if (isDualEnabled) {
 
+                        animateFrame(0,1,0);
+                        animateFrame(0,2,1);
+                        animateFrame(0,3,0);
+                        animateFrame(1,1,0);
+                        animateFrame(1,2,1);
+                        animateFrame(1,3,0);
+
                         setFrame0("curr", 0);
                         setFrameBackground(0,getSubFrame("curr"), frame0.curr);
 
@@ -181,6 +203,13 @@ $(document).ready(function() {
                     // Ha egyes galérián inicializálunk, akkor csak az első framere kell megcsinálni.
                     } else {
                         
+                        animateFrame(0,1,0);
+                        animateFrame(0,2,1);
+                        animateFrame(0,3,0);
+                        animateFrame(1,1,0);
+                        animateFrame(1,2,0);
+                        animateFrame(1,3,0);
+
                         setFrame0("curr", 0);
                         setFrameBackground(0,getSubFrame("curr"), frame0.curr);
                         setFrame0("next", 1);
@@ -193,9 +222,22 @@ $(document).ready(function() {
                 // VÁLTÁS
                 case "change":
 
+                    if(current_dekor_gallery < 0) {
+                        current_dekor_gallery = 0;
+                    } else if (current_dekor_gallery > dekor_gallery.length - 1) {
+                        current_dekor_gallery = dekor_gallery.length;
+                    }
+
                     // Ha kettősről váltunk egyesre:
-                    if(isDualEnabled) {
+                    if(!isDualEnabled) {
                         
+                        animateFrame(0,getSubFrame("prev"),0);
+                        animateFrame(0,getSubFrame("curr"),1);
+                        animateFrame(0,getSubFrame("next"),0);
+                        animateFrame(1,getSubFrame("prev"),0);
+                        animateFrame(1,getSubFrame("curr"),0);
+                        animateFrame(1,getSubFrame("next"),0);
+
                         setFrame0("next", frame0.curr + 1);
                         setFrameBackground(0, getSubFrame("next"), frame0.next);
                         setFrame0("prev", frame0.curr - 1);
@@ -205,45 +247,56 @@ $(document).ready(function() {
                     // Ha egyesről váltunk kettősre:
                     } else {
 
+                        animateFrame(0,getSubFrame("prev"),0);
+                        animateFrame(0,getSubFrame("curr"),1);
+                        animateFrame(0,getSubFrame("next"),0);
+                        animateFrame(1,getSubFrame("prev"),0);
+                        animateFrame(1,getSubFrame("curr"),1);
+                        animateFrame(1,getSubFrame("next"),0);
+
                         // Attól függően, hogy páros, vagy páratlan a current, mást csinálunk!
+                        let current = frame0.curr;
 
                         // Páros
-                        if (frame0.curr % 2 == 0) {
+                        if (current % 2 == 0) {
                             
-                            setFrame1("curr", frame0.next)
-                            setFrameBackground(1, getSubFrame("curr"), frame1.curr);
+                            // setFrame1("curr", frame0.next)
+                            // setFrameBackground(1, getSubFrame("curr"), frame1.curr);
+                            setFrame1("curr", current + 1);
+                            setFrameBackground(1,getSubFrame("curr"), frame1.curr);
 
-                            setFrame1("prev", frame1.curr - 2);
+                            setFrame1("prev", current - 1);
                             setFrameBackground(1, getSubFrame("prev"), frame1.prev);
 
-                            setFrame1("next", frame1.curr + 2);
+                            setFrame1("next", current + 3);
                             setFrameBackground(1, getSubFrame("next"), frame1.next);
 
-                            setFrame0("prev", frame0.curr - 2);
+                            setFrame0("prev", current - 2);
                             setFrameBackground(0, getSubFrame("prev"), frame0.prev);
 
-                            setFrame0("next", frame0.curr + 2);
+                            setFrame0("next", current + 2);
                             setFrameBackground(0, getSubFrame("next"), frame0.next);
+
 
                         // Páratlan
                         } else {
                             
-                            setFrame1("curr", frame0.curr);
-                            setFrameBackground(1, getSubFrame("curr"). frame1.curr);
+                            setFrame1("curr", current);
+                            setFrameBackground(1, getSubFrame("curr"), frame1.curr);
 
-                            setFrame1("prev", frame1.curr - 2);
+                            setFrame1("prev", current - 2);
                             setFrameBackground(1, getSubFrame("prev"), frame1.prev);
 
-                            setFrame1("next", frame1.curr + 2);
+                            setFrame1("next", current + 2);
                             setFrameBackground(1, getSubFrame("next"), frame1.next);
 
-                            setFrame0("curr", frame0.prev);
-                            setFrameBackground(0, getSubFrame("curr"). frame0.curr);
+                            setFrame0("curr", current - 1);
+                            setFrameBackground(0, getSubFrame("curr"), frame0.curr);
 
-                            setFrame0("prev", frame0.curr - 2);
+                            setFrame0("prev", current - 3);
                             setFrameBackground(0, getSubFrame("prev"), frame0.prev);
 
-                            setFrame0("next", frame0.curr + 2);
+                            setFrame0("next", current + 1);
                             setFrameBackground(0, getSubFrame("next"), frame0.next);
 
                         }
@@ -397,6 +450,9 @@ $(document).ready(function() {
 
             setHref(0,frame0.curr);
             if(isDualEnabled) setHref(1,frame1.curr);
+
+            // console.log("dual: " + isDualEnabled + "\nsetting: " + setting);
+            // console.table([frame0,frame1]);
 
         }
 
@@ -577,9 +633,6 @@ $(document).ready(function() {
 
         // Animálja a frame (0 vagy 1) subframe (1, 2 vagy 3) opacity-jét value (0 vagy 1) értékre.
         function animateFrame(frame, subframe, value){      
-            
-            // console.log("animateFrame:\nframe:" + frame + "\nsubframe: frame" + subframe + "\nvalue: " + value );
-            
             $($(("#dekoracio-gallery .gallery .gallery-frame .frame" + subframe))[frame]).animate({opacity : value}, 333);
         }
 
@@ -590,19 +643,24 @@ $(document).ready(function() {
 
             e.preventDefault();
             
-            //Ha a 0. képnél vagyunk, akkor nincs balra semmi, nem lépünk tovább
-            if(current_dekor_gallery <= 0) {
+            if(isDualEnabled) {
 
-                shakeElement(("#dekoracio-gallery .gallery .gallery-frame .frame" + current_dekor_frame),'left')
-                // NINCS ANIMÁCIÓ MÉG
+                if(frame0.prev == undefined && frame1.prev == undefined ) {
+                    shakeElement(("#dekoracio-gallery .gallery .gallery-frame .frame" + current_dekor_frame),'left');
+                } else {
+                    updateDekorGallery("left");
+                }
 
-            // Ha nem a 0. képnél vagyunk, akkor van mit mutatni, csökkentjük a jelenlegi indexet eggyel,
-            // majd frissítjük vele a galériát.
             } else {
 
-                updateDekorGallery('left');
+                if (frame0.prev == undefined ) {
+                    shakeElement(("#dekoracio-gallery .gallery .gallery-frame .frame" + current_dekor_frame),'left');
+                } else {
+                    updateDekorGallery("left");
+                }
 
             }
+
         });
 
 
@@ -611,18 +669,36 @@ $(document).ready(function() {
 
             e.preventDefault();
 
-            // Ha az utolsó képnél vagyunk, nincs semmi jobbra.
-            if(current_dekor_gallery >= dekor_gallery.length - (isDualEnabled ? 2 : 1)) {
+            if(isDualEnabled) {
 
-                shakeElement(("#dekoracio-gallery .gallery .gallery-frame .frame" + current_dekor_frame),'right')
+                if(frame0.next == undefined && frame1.next == undefined ) {
+                    shakeElement(("#dekoracio-gallery .gallery .gallery-frame .frame" + current_dekor_frame),'right');
+                } else {
+                    updateDekorGallery("right");
+                }
 
-            // Ha nem az utolsónál vagyunk, van jobbra még kép, megnöveljük eggyel az indexet,
-            // és frissítjük a galériát.
             } else {
 
-                updateDekorGallery('right');
+                if (frame0.next == undefined ) {
+                    shakeElement(("#dekoracio-gallery .gallery .gallery-frame .frame" + current_dekor_frame),'right');
+                } else {
+                    updateDekorGallery("right");
+                }
 
             }
+
+            // // Ha az utolsó képnél vagyunk, nincs semmi jobbra.
+            // if(current_dekor_gallery >= dekor_gallery.length - (isDualEnabled ? 2 : 1)) {
+
+            //     shakeElement(("#dekoracio-gallery .gallery .gallery-frame .frame" + current_dekor_frame),'right')
+
+            // // Ha nem az utolsónál vagyunk, van jobbra még kép, megnöveljük eggyel az indexet,
+            // // és frissítjük a galériát.
+            // } else {
+
+            //     updateDekorGallery('right');
+
+            // }
         });
 
 
@@ -655,13 +731,21 @@ $(document).ready(function() {
             if(startX > endX + 50) {
                 
                 // lsd. jobb gomb
-                if(current_dekor_gallery >= dekor_gallery.length - (isDualEnabled ? 2 : 1)) {
+                if(isDualEnabled) {
 
-                    shakeElement(("#dekoracio-gallery .gallery .gallery-frame .frame" + current_dekor_frame),"right");
+                    if(frame0.next == undefined && frame1.next == undefined ) {
+                        shakeElement(("#dekoracio-gallery .gallery .gallery-frame .frame" + current_dekor_frame),'right');
+                    } else {
+                        updateDekorGallery("right");
+                    }
 
                 } else {
 
-                    updateDekorGallery('right');
+                    if (frame0.next == undefined ) {
+                        shakeElement(("#dekoracio-gallery .gallery .gallery-frame .frame" + current_dekor_frame),'right');
+                    } else {
+                        updateDekorGallery("right");
+                    }
 
                 }
 
@@ -669,13 +753,21 @@ $(document).ready(function() {
             } else if(startX + 50 < endX) {
                 
                 // lsd. bal gomb
-                if(current_dekor_gallery <= 0) {
+                if(isDualEnabled) {
 
-                    shakeElement(("#dekoracio-gallery .gallery .gallery-frame .frame" + current_dekor_frame),"left");
-                    
+                    if(frame0.prev == undefined && frame1.prev == undefined ) {
+                        shakeElement(("#dekoracio-gallery .gallery .gallery-frame .frame" + current_dekor_frame),'left');
+                    } else {
+                        updateDekorGallery("left");
+                    }
+
                 } else {
 
-                    updateDekorGallery('left');
+                    if (frame0.prev == undefined ) {
+                        shakeElement(("#dekoracio-gallery .gallery .gallery-frame .frame" + current_dekor_frame),'left');
+                    } else {
+                        updateDekorGallery("left");
+                    }
 
                 }
                 
